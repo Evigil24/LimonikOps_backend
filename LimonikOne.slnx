@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/src/Host/">
+    <Project Path="src/Host/Host.csproj" />
+  </Folder>
+  <Folder Name="/src/Shared/">
+    <Project Path="src/Shared/Shared.Abstractions/Shared.Abstractions.csproj" />
+    <Project Path="src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Reception/">
+    <Project Path="src/Modules/Reception/Reception.Api/Reception.Api.csproj" />
+    <Project Path="src/Modules/Reception/Reception.Application/Reception.Application.csproj" />
+    <Project Path="src/Modules/Reception/Reception.Domain/Reception.Domain.csproj" />
+    <Project Path="src/Modules/Reception/Reception.Infrastructure/Reception.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Architecture.Tests/Architecture.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tests/Modules/">
+    <Project Path="tests/Modules/Reception.UnitTests/Reception.UnitTests.csproj" />
+    <Project Path="tests/Modules/Reception.IntegrationTests/Reception.IntegrationTests.csproj" />
+  </Folder>
+</Solution>

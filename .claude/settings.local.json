@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet package search Microsoft.EntityFrameworkCore --exact-match --take 1)",
+      "Bash(dotnet package search Npgsql.EntityFrameworkCore.PostgreSQL --exact-match --take 1)",
+      "Bash(dotnet package search Microsoft.AspNetCore.Mvc.Testing --exact-match --take 1)"
+    ]
+  }
+}
