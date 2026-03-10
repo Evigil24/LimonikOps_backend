@@ -12,6 +12,6 @@
     <ItemGroup>
         <ProjectReference Include="..\Shared\Shared.Abstractions\Shared.Abstractions.csproj" />
         <ProjectReference Include="..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
-        <ProjectReference Include="..\Modules\Reception\Reception.Api\Reception.Api.csproj" />
+        <ProjectReference Include="..\Modules\Scale\Scale.Api\Scale.Api.csproj" />
     </ItemGroup>
 </Project>

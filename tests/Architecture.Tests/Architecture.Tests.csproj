@@ -15,9 +15,9 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\Shared\Shared.Abstractions\Shared.Abstractions.csproj" />
-        <ProjectReference Include="..\..\src\Modules\Reception\Reception.Domain\Reception.Domain.csproj" />
-        <ProjectReference Include="..\..\src\Modules\Reception\Reception.Application\Reception.Application.csproj" />
-        <ProjectReference Include="..\..\src\Modules\Reception\Reception.Infrastructure\Reception.Infrastructure.csproj" />
-        <ProjectReference Include="..\..\src\Modules\Reception\Reception.Api\Reception.Api.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Scale\Scale.Domain\Scale.Domain.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Scale\Scale.Application\Scale.Application.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Scale\Scale.Infrastructure\Scale.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Scale\Scale.Api\Scale.Api.csproj" />
     </ItemGroup>
 </Project>

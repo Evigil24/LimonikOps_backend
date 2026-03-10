@@ -19,8 +19,8 @@ API docs: http://localhost:5100/scalar/v1
 ```bash
 dotnet test LimonikOne.slnx                        # all tests
 dotnet test tests/Architecture.Tests                # architecture rules
-dotnet test tests/Modules/Reception.UnitTests       # unit tests
-dotnet test tests/Modules/Reception.IntegrationTests # integration (needs Docker)
+dotnet test tests/Modules/Scale.UnitTests       # unit tests
+dotnet test tests/Modules/Scale.IntegrationTests # integration (needs Docker)
 ```
 
 Integration tests use Testcontainers (PostgreSQL) — Docker must be running.

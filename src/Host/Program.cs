@@ -1,4 +1,4 @@
-using LimonikOne.Modules.Reception.Api;
+using LimonikOne.Modules.Scale.Api;
 using LimonikOne.Shared.Infrastructure.Extensions;
 using LimonikOne.Shared.Infrastructure.Modules;
 using Scalar.AspNetCore;
@@ -18,14 +18,14 @@ builder.Host.UseSerilog(
 );
 
 // Add services
-builder.Services.AddControllers().AddApplicationPart(typeof(ReceptionModule).Assembly);
+builder.Services.AddControllers().AddApplicationPart(typeof(ScaleModule).Assembly);
 
 builder.Services.AddOpenApi();
 
 builder.Services.AddSharedInfrastructure();
 
 // Discover and register modules
-var moduleAssemblies = new[] { typeof(ReceptionModule).Assembly };
+var moduleAssemblies = new[] { typeof(ScaleModule).Assembly };
 builder.Services.AddModules(builder.Configuration, moduleAssemblies);
 
 var app = builder.Build();

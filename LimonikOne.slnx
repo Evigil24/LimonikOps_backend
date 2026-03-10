@@ -6,17 +6,17 @@
         <Project Path="src/Shared/Shared.Abstractions/Shared.Abstractions.csproj" />
         <Project Path="src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj" />
     </Folder>
-    <Folder Name="/src/Modules/Reception/">
-        <Project Path="src/Modules/Reception/Reception.Api/Reception.Api.csproj" />
-        <Project Path="src/Modules/Reception/Reception.Application/Reception.Application.csproj" />
-        <Project Path="src/Modules/Reception/Reception.Domain/Reception.Domain.csproj" />
-        <Project Path="src/Modules/Reception/Reception.Infrastructure/Reception.Infrastructure.csproj" />
+    <Folder Name="/src/Modules/Scale/">
+        <Project Path="src/Modules/Scale/Scale.Api/Scale.Api.csproj" />
+        <Project Path="src/Modules/Scale/Scale.Application/Scale.Application.csproj" />
+        <Project Path="src/Modules/Scale/Scale.Domain/Scale.Domain.csproj" />
+        <Project Path="src/Modules/Scale/Scale.Infrastructure/Scale.Infrastructure.csproj" />
     </Folder>
     <Folder Name="/tests/">
         <Project Path="tests/Architecture.Tests/Architecture.Tests.csproj" />
     </Folder>
     <Folder Name="/tests/Modules/">
-        <Project Path="tests/Modules/Reception.UnitTests/Reception.UnitTests.csproj" />
-        <Project Path="tests/Modules/Reception.IntegrationTests/Reception.IntegrationTests.csproj" />
+        <Project Path="tests/Modules/Scale.UnitTests/Scale.UnitTests.csproj" />
+        <Project Path="tests/Modules/Scale.IntegrationTests/Scale.IntegrationTests.csproj" />
     </Folder>
 </Solution>
