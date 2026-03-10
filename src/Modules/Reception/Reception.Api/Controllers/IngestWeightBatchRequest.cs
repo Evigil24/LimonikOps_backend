@@ -5,11 +5,13 @@ public sealed record IngestWeightBatchRequest(
     string DeviceId,
     string Location,
     DateTime SentAt,
-    List<IngestWeightReadingRequest> Readings);
+    List<IngestWeightReadingRequest> Readings
+);
 
 public sealed record IngestWeightReadingRequest(
     decimal Weight,
     int Count,
     DateTime FirstTimestamp,
     DateTime LastTimestamp,
-    int StableCount);
+    int StableCount
+);

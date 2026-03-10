@@ -13,13 +13,21 @@ internal sealed class WeightBatchRepository : IWeightBatchRepository
         _dbContext = dbContext;
     }
 
-    public async Task<bool> ExistsByExternalBatchIdAsync(Guid externalBatchId, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistsByExternalBatchIdAsync(
+        Guid externalBatchId,
+        CancellationToken cancellationToken = default
+    )
     {
-        return await _dbContext.WeightBatches
-            .AnyAsync(b => b.ExternalBatchId == externalBatchId, cancellationToken);
+        return await _dbContext.WeightBatches.AnyAsync(
+            b => b.ExternalBatchId == externalBatchId,
+            cancellationToken
+        );
     }
 
-    public async Task AddAsync(WeightBatchEntity batch, CancellationToken cancellationToken = default)
+    public async Task AddAsync(
+        WeightBatchEntity batch,
+        CancellationToken cancellationToken = default
+    )
     {
         await _dbContext.WeightBatches.AddAsync(batch, cancellationToken);
         await _dbContext.SaveChangesAsync(cancellationToken);

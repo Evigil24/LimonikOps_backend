@@ -20,7 +20,9 @@ public sealed class ReceptionModule : IModule
 
     public void Register(IServiceCollection services, IConfiguration configuration)
     {
-        var postgresOptions = configuration.GetSection(PostgresOptions.SectionName).Get<PostgresOptions>();
+        var postgresOptions = configuration
+            .GetSection(PostgresOptions.SectionName)
+            .Get<PostgresOptions>();
 
         services.AddDbContext<ReceptionDbContext>(options =>
         {

@@ -24,8 +24,9 @@ public class ReceptionApiTests : IClassFixture<ReceptionApiFactory>
             DateTime.UtcNow,
             new List<IngestWeightReadingRequest>
             {
-                new(150.5m, 10, DateTime.UtcNow.AddMinutes(-5), DateTime.UtcNow, 8)
-            });
+                new(150.5m, 10, DateTime.UtcNow.AddMinutes(-5), DateTime.UtcNow, 8),
+            }
+        );
 
         var response = await _client.PostAsJsonAsync("/api/weights", request);
 
@@ -40,7 +41,8 @@ public class ReceptionApiTests : IClassFixture<ReceptionApiFactory>
             "",
             "",
             default,
-            new List<IngestWeightReadingRequest>());
+            new List<IngestWeightReadingRequest>()
+        );
 
         var response = await _client.PostAsJsonAsync("/api/weights", request);
 
@@ -58,8 +60,9 @@ public class ReceptionApiTests : IClassFixture<ReceptionApiFactory>
             DateTime.UtcNow,
             new List<IngestWeightReadingRequest>
             {
-                new(100m, 5, DateTime.UtcNow.AddMinutes(-2), DateTime.UtcNow, 5)
-            });
+                new(100m, 5, DateTime.UtcNow.AddMinutes(-2), DateTime.UtcNow, 5),
+            }
+        );
 
         var firstResponse = await _client.PostAsJsonAsync("/api/weights", request);
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);

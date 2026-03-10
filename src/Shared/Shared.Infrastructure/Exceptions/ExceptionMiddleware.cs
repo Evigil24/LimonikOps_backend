@@ -23,7 +23,11 @@ internal sealed class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unhandled exception occurred. TraceId: {TraceId}", httpContext.TraceIdentifier);
+            _logger.LogError(
+                ex,
+                "An unhandled exception occurred. TraceId: {TraceId}",
+                httpContext.TraceIdentifier
+            );
             await HandleExceptionAsync(httpContext, ex);
         }
     }
@@ -38,10 +42,7 @@ internal sealed class ExceptionMiddleware
             Title = "An unexpected error occurred",
             Detail = exception.Message,
             Instance = httpContext.Request.Path,
-            Extensions =
-            {
-                ["traceId"] = httpContext.TraceIdentifier
-            }
+            Extensions = { ["traceId"] = httpContext.TraceIdentifier },
         };
 
         httpContext.Response.StatusCode = statusCode;

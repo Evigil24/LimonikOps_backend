@@ -18,8 +18,11 @@ public class Result
     public Error? Error { get; }
 
     public static Result Success() => new(true, null);
+
     public static Result Failure(Error error) => new(false, error);
+
     public static Result<T> Success<T>(T value) => new(value, true, null);
+
     public static Result<T> Failure<T>(Error error) => new(default, false, error);
 }
 
@@ -33,7 +36,8 @@ public class Result<T> : Result
         _value = value;
     }
 
-    public T Value => IsSuccess
-        ? _value!
-        : throw new InvalidOperationException("Cannot access the value of a failed result.");
+    public T Value =>
+        IsSuccess
+            ? _value!
+            : throw new InvalidOperationException("Cannot access the value of a failed result.");
 }

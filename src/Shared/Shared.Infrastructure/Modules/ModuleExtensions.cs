@@ -8,7 +8,11 @@ namespace LimonikOne.Shared.Infrastructure.Modules;
 
 public static class ModuleExtensions
 {
-    public static IServiceCollection AddModules(this IServiceCollection services, IConfiguration configuration, IEnumerable<Assembly> moduleAssemblies)
+    public static IServiceCollection AddModules(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        IEnumerable<Assembly> moduleAssemblies
+    )
     {
         var modules = DiscoverModules(moduleAssemblies);
 
@@ -38,7 +42,10 @@ public static class ModuleExtensions
     {
         return assemblies
             .SelectMany(a => a.GetTypes())
-            .Where(t => typeof(IModule).IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
+            .Where(t =>
+                typeof(IModule).IsAssignableFrom(t)
+                && t is { IsInterface: false, IsAbstract: false }
+            )
             .Select(Activator.CreateInstance)
             .Cast<IModule>()
             .ToList();

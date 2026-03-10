@@ -13,40 +13,60 @@ public class ModuleArchitectureTests
     [Fact]
     public void Domain_Should_Not_Depend_On_Application()
     {
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
             .ShouldNot()
             .HaveDependencyOn(ApplicationNamespace)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue(
-            "Domain should not depend on Application. Failing types: {0}",
-            result.FailingTypeNames is not null ? string.Join(", ", result.FailingTypeNames) : "none");
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Domain should not depend on Application. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
     }
 
     [Fact]
     public void Domain_Should_Not_Depend_On_Infrastructure()
     {
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
             .ShouldNot()
             .HaveDependencyOn(InfrastructureNamespace)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue(
-            "Domain should not depend on Infrastructure. Failing types: {0}",
-            result.FailingTypeNames is not null ? string.Join(", ", result.FailingTypeNames) : "none");
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Domain should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
     }
 
     [Fact]
     public void Application_Should_Not_Depend_On_Infrastructure()
     {
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly)
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Reception.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly
+            )
             .ShouldNot()
             .HaveDependencyOn(InfrastructureNamespace)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue(
-            "Application should not depend on Infrastructure. Failing types: {0}",
-            result.FailingTypeNames is not null ? string.Join(", ", result.FailingTypeNames) : "none");
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Application should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
     }
 
     [Fact]
@@ -54,15 +74,21 @@ public class ModuleArchitectureTests
     {
         // Api references Infrastructure only for module registration (IModule implementation),
         // but controllers should not directly use Infrastructure types
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Api.ReceptionModule).Assembly)
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Reception.Api.ReceptionModule).Assembly)
             .That()
             .ResideInNamespace("LimonikOne.Modules.Reception.Api.Controllers")
             .ShouldNot()
             .HaveDependencyOn(InfrastructureNamespace)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue(
-            "Api controllers should not depend on Infrastructure directly. Failing types: {0}",
-            result.FailingTypeNames is not null ? string.Join(", ", result.FailingTypeNames) : "none");
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Api controllers should not depend on Infrastructure directly. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
     }
 }

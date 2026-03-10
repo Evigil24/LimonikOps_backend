@@ -7,9 +7,8 @@ internal sealed class ReceptionDbContext : DbContext
 {
     public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
 
-    public ReceptionDbContext(DbContextOptions<ReceptionDbContext> options) : base(options)
-    {
-    }
+    public ReceptionDbContext(DbContextOptions<ReceptionDbContext> options)
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

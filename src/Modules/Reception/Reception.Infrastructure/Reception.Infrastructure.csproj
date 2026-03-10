@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <RootNamespace>LimonikOne.Modules.Reception.Infrastructure</RootNamespace>
-  </PropertyGroup>
+    <PropertyGroup>
+        <RootNamespace>LimonikOne.Modules.Reception.Infrastructure</RootNamespace>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Reception.Application\Reception.Application.csproj" />
-    <ProjectReference Include="..\Reception.Domain\Reception.Domain.csproj" />
-    <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Reception.Application\Reception.Application.csproj" />
+        <ProjectReference Include="..\Reception.Domain\Reception.Domain.csproj" />
+        <ProjectReference Include="..\..\..\Shared\Shared.Infrastructure\Shared.Infrastructure.csproj" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <InternalsVisibleTo Include="Reception.Api" />
-    <InternalsVisibleTo Include="Reception.IntegrationTests" />
-  </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="Reception.Api" />
+        <InternalsVisibleTo Include="Reception.IntegrationTests" />
+    </ItemGroup>
 </Project>

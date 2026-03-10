@@ -7,17 +7,18 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
-builder.Host.UseSerilog((context, configuration) =>
-{
-    configuration
-        .ReadFrom.Configuration(context.Configuration)
-        .Enrich.FromLogContext()
-        .WriteTo.Console();
-});
+builder.Host.UseSerilog(
+    (context, configuration) =>
+    {
+        configuration
+            .ReadFrom.Configuration(context.Configuration)
+            .Enrich.FromLogContext()
+            .WriteTo.Console();
+    }
+);
 
 // Add services
-builder.Services.AddControllers()
-    .AddApplicationPart(typeof(ReceptionModule).Assembly);
+builder.Services.AddControllers().AddApplicationPart(typeof(ReceptionModule).Assembly);
 
 builder.Services.AddOpenApi();
 

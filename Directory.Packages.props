@@ -1,34 +1,52 @@
 <Project>
-  <PropertyGroup>
-    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-  </PropertyGroup>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <!-- Logging -->
-    <PackageVersion Include="Serilog.AspNetCore" Version="$(SerilogAspNetCoreVersion)" />
-    <PackageVersion Include="Serilog.Sinks.Console" Version="$(SerilogSinksConsoleVersion)" />
+    <ItemGroup>
+        <!-- Logging -->
+        <PackageVersion Include="Serilog.AspNetCore" Version="$(SerilogAspNetCoreVersion)" />
+        <PackageVersion Include="Serilog.Sinks.Console" Version="$(SerilogSinksConsoleVersion)" />
 
-    <!-- Validation -->
-    <PackageVersion Include="FluentValidation" Version="$(FluentValidationVersion)" />
-    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="$(FluentValidationDIVersion)" />
+        <!-- Validation -->
+        <PackageVersion Include="FluentValidation" Version="$(FluentValidationVersion)" />
+        <PackageVersion
+            Include="FluentValidation.DependencyInjectionExtensions"
+            Version="$(FluentValidationDIVersion)"
+        />
 
-    <!-- EF Core + PostgreSQL -->
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="$(NpgsqlEFVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="$(EFCoreVersion)" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(EFCoreVersion)" />
+        <!-- EF Core + PostgreSQL -->
+        <PackageVersion
+            Include="Npgsql.EntityFrameworkCore.PostgreSQL"
+            Version="$(NpgsqlEFVersion)"
+        />
+        <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="$(EFCoreVersion)" />
+        <PackageVersion
+            Include="Microsoft.EntityFrameworkCore.Relational"
+            Version="$(EFCoreVersion)"
+        />
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="$(EFCoreVersion)" />
 
-    <!-- OpenAPI -->
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="$(AspNetCoreOpenApiVersion)" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="$(ScalarAspNetCoreVersion)" />
+        <!-- OpenAPI -->
+        <PackageVersion
+            Include="Microsoft.AspNetCore.OpenApi"
+            Version="$(AspNetCoreOpenApiVersion)"
+        />
+        <PackageVersion Include="Scalar.AspNetCore" Version="$(ScalarAspNetCoreVersion)" />
 
-    <!-- Testing -->
-    <PackageVersion Include="NetArchTest.Rules" Version="$(NetArchTestVersion)" />
-    <PackageVersion Include="xunit" Version="$(XunitVersion)" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftTestSdkVersion)" />
-    <PackageVersion Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="$(MicrosoftAspNetCoreMvcTestingVersion)" />
-    <PackageVersion Include="Testcontainers.PostgreSql" Version="$(TestcontainersPostgresVersion)" />
-  </ItemGroup>
+        <!-- Testing -->
+        <PackageVersion Include="NetArchTest.Rules" Version="$(NetArchTestVersion)" />
+        <PackageVersion Include="xunit" Version="$(XunitVersion)" />
+        <PackageVersion Include="xunit.runner.visualstudio" Version="$(XunitRunnerVersion)" />
+        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="$(MicrosoftTestSdkVersion)" />
+        <PackageVersion Include="FluentAssertions" Version="$(FluentAssertionsVersion)" />
+        <PackageVersion
+            Include="Microsoft.AspNetCore.Mvc.Testing"
+            Version="$(MicrosoftAspNetCoreMvcTestingVersion)"
+        />
+        <PackageVersion
+            Include="Testcontainers.PostgreSql"
+            Version="$(TestcontainersPostgresVersion)"
+        />
+    </ItemGroup>
 </Project>

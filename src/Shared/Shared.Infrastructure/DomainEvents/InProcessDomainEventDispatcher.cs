@@ -12,7 +12,10 @@ internal sealed class InProcessDomainEventDispatcher : IDomainEventDispatcher
         _serviceProvider = serviceProvider;
     }
 
-    public async Task DispatchAsync(IEnumerable<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+    public async Task DispatchAsync(
+        IEnumerable<IDomainEvent> domainEvents,
+        CancellationToken cancellationToken = default
+    )
     {
         foreach (var domainEvent in domainEvents)
         {
@@ -21,7 +24,9 @@ internal sealed class InProcessDomainEventDispatcher : IDomainEventDispatcher
 
             foreach (var handler in handlers)
             {
-                var method = handlerType.GetMethod(nameof(IDomainEventHandler<IDomainEvent>.HandleAsync));
+                var method = handlerType.GetMethod(
+                    nameof(IDomainEventHandler<IDomainEvent>.HandleAsync)
+                );
                 if (method is not null)
                 {
                     await (Task)method.Invoke(handler, [domainEvent, cancellationToken])!;

@@ -14,8 +14,10 @@ internal sealed class CorrelationIdMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        if (!context.Request.Headers.TryGetValue(CorrelationIdHeader, out var correlationId)
-            || string.IsNullOrWhiteSpace(correlationId))
+        if (
+            !context.Request.Headers.TryGetValue(CorrelationIdHeader, out var correlationId)
+            || string.IsNullOrWhiteSpace(correlationId)
+        )
         {
             correlationId = Guid.NewGuid().ToString();
         }
