@@ -12,8 +12,7 @@ namespace LimonikOne.Modules.Reception.Infrastructure.Database.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "reception");
+            migrationBuilder.EnsureSchema(name: "reception");
 
             migrationBuilder.CreateTable(
                 name: "weight_batches",
@@ -22,17 +21,36 @@ namespace LimonikOne.Modules.Reception.Infrastructure.Database.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     external_batch_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    device_id = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    location = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    sent_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    received_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    display_id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityAlwaysColumn)
+                    device_id = table.Column<string>(
+                        type: "character varying(100)",
+                        maxLength: 100,
+                        nullable: false
+                    ),
+                    location = table.Column<string>(
+                        type: "character varying(200)",
+                        maxLength: 200,
+                        nullable: false
+                    ),
+                    sent_at = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
+                    received_at = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
+                    display_id = table
+                        .Column<long>(type: "bigint", nullable: false)
+                        .Annotation(
+                            "Npgsql:ValueGenerationStrategy",
+                            NpgsqlValueGenerationStrategy.IdentityAlwaysColumn
+                        ),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_weight_batches", x => x.id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "weight_readings",
@@ -40,12 +58,23 @@ namespace LimonikOne.Modules.Reception.Infrastructure.Database.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    weight = table.Column<decimal>(type: "numeric(18,4)", precision: 18, scale: 4, nullable: false),
+                    weight = table.Column<decimal>(
+                        type: "numeric(18,4)",
+                        precision: 18,
+                        scale: 4,
+                        nullable: false
+                    ),
                     count = table.Column<int>(type: "integer", nullable: false),
-                    first_timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    last_timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    first_timestamp = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
+                    last_timestamp = table.Column<DateTime>(
+                        type: "timestamp with time zone",
+                        nullable: false
+                    ),
                     stable_count = table.Column<int>(type: "integer", nullable: false),
-                    weight_batch_id = table.Column<Guid>(type: "uuid", nullable: false)
+                    weight_batch_id = table.Column<Guid>(type: "uuid", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -56,40 +85,41 @@ namespace LimonikOne.Modules.Reception.Infrastructure.Database.Migrations
                         principalSchema: "reception",
                         principalTable: "weight_batches",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_weight_batches_display_id",
                 schema: "reception",
                 table: "weight_batches",
                 column: "display_id",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_weight_batches_external_batch_id",
                 schema: "reception",
                 table: "weight_batches",
                 column: "external_batch_id",
-                unique: true);
+                unique: true
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_weight_readings_weight_batch_id",
                 schema: "reception",
                 table: "weight_readings",
-                column: "weight_batch_id");
+                column: "weight_batch_id"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "weight_readings",
-                schema: "reception");
+            migrationBuilder.DropTable(name: "weight_readings", schema: "reception");
 
-            migrationBuilder.DropTable(
-                name: "weight_batches",
-                schema: "reception");
+            migrationBuilder.DropTable(name: "weight_batches", schema: "reception");
         }
     }
 }
