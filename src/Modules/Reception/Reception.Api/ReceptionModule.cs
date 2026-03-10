@@ -1,9 +1,12 @@
 using FluentValidation;
+using LimonikOne.Modules.Reception.Api.Filters;
 using LimonikOne.Modules.Reception.Application.Receptions.Create;
 using LimonikOne.Modules.Reception.Application.Receptions.EventHandlers;
 using LimonikOne.Modules.Reception.Application.Receptions.Get;
+using LimonikOne.Modules.Reception.Application.Weights.Ingest;
 using LimonikOne.Modules.Reception.Domain.Receptions;
 using LimonikOne.Modules.Reception.Domain.Receptions.Events;
+using LimonikOne.Modules.Reception.Domain.Weights;
 using LimonikOne.Modules.Reception.Infrastructure.Database;
 using LimonikOne.Modules.Reception.Infrastructure.Repositories;
 using LimonikOne.Shared.Abstractions.Application;
@@ -44,6 +47,12 @@ public sealed class ReceptionModule : IModule
 
         // Domain Event Handlers
         services.AddScoped<IDomainEventHandler<ReceptionCreatedEvent>, ReceptionCreatedEventHandler>();
+
+        // Weight Batch ingestion
+        services.AddScoped<IWeightBatchRepository, WeightBatchRepository>();
+        services.AddScoped<ICommandHandler<IngestWeightBatchCommand>, IngestWeightBatchHandler>();
+        services.AddScoped<IValidator<IngestWeightBatchCommand>, IngestWeightBatchValidator>();
+        services.AddScoped<ApiKeyAuthFilter>();
     }
 
     public void Use(IApplicationBuilder app)

@@ -1,4 +1,5 @@
 using LimonikOne.Modules.Reception.Domain.Receptions;
+using LimonikOne.Modules.Reception.Domain.Weights;
 using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Reception.Infrastructure.Database;
@@ -6,6 +7,7 @@ namespace LimonikOne.Modules.Reception.Infrastructure.Database;
 internal sealed class ReceptionDbContext : DbContext
 {
     public DbSet<ReceptionEntity> Receptions => Set<ReceptionEntity>();
+    public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
 
     public ReceptionDbContext(DbContextOptions<ReceptionDbContext> options) : base(options)
     {
