@@ -25,6 +25,20 @@ dotnet test tests/Modules/Reception.IntegrationTests # integration (needs Docker
 
 Integration tests use Testcontainers (PostgreSQL) — Docker must be running.
 
+## Formatting
+
+Code is formatted with [CSharpier](https://csharpier.com). Run from repo root:
+
+```bash
+dotnet csharpier format .
+```
+
+Check formatting without modifying files:
+
+```bash
+dotnet csharpier check .
+```
+
 ## Architecture Rules
 
 - **Modular monolith** with vertical slices per module under `src/Modules/`
@@ -51,6 +65,7 @@ Integration tests use Testcontainers (PostgreSQL) — Docker must be running.
 - Nullable reference types enabled globally
 - Centralized NuGet versions in `Directory.Packages.props`
 - Solution file: `LimonikOne.slnx` (modern .slnx format)
+- CSharpier for code formatting (local tool in `dotnet-tools.json`)
 
 ## Project Structure
 
