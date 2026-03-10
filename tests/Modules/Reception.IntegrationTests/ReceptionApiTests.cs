@@ -2,7 +2,6 @@ using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
 using LimonikOne.Modules.Reception.Api.Controllers;
-using LimonikOne.Modules.Reception.Application.Receptions.Get;
 
 namespace LimonikOne.Modules.Reception.IntegrationTests;
 
@@ -16,61 +15,56 @@ public class ReceptionApiTests : IClassFixture<ReceptionApiFactory>
     }
 
     [Fact]
-    public async Task CreateReception_WithValidRequest_ReturnsCreated()
+    public async Task IngestWeightBatch_WithValidRequest_ReturnsOk()
     {
-        // Arrange
-        var request = new CreateReceptionRequest("John", "Doe", "VIP guest");
+        var request = new IngestWeightBatchRequest(
+            Guid.NewGuid(),
+            "scale-001",
+            "Warehouse A",
+            DateTime.UtcNow,
+            new List<IngestWeightReadingRequest>
+            {
+                new(150.5m, 10, DateTime.UtcNow.AddMinutes(-5), DateTime.UtcNow, 8)
+            });
 
-        // Act
-        var response = await _client.PostAsJsonAsync("/api/receptions", request);
+        var response = await _client.PostAsJsonAsync("/api/weights", request);
 
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var result = await response.Content.ReadFromJsonAsync<CreateReceptionResponse>();
-        result.Should().NotBeNull();
-        result!.Id.Should().NotBe(Guid.Empty);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 
     [Fact]
-    public async Task CreateReception_WithInvalidRequest_ReturnsBadRequest()
+    public async Task IngestWeightBatch_WithInvalidRequest_ReturnsBadRequest()
     {
-        // Arrange
-        var request = new CreateReceptionRequest("", "", null);
+        var request = new IngestWeightBatchRequest(
+            Guid.Empty,
+            "",
+            "",
+            default,
+            new List<IngestWeightReadingRequest>());
 
-        // Act
-        var response = await _client.PostAsJsonAsync("/api/receptions", request);
+        var response = await _client.PostAsJsonAsync("/api/weights", request);
 
-        // Assert
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
 
     [Fact]
-    public async Task GetReceptionById_WhenExists_ReturnsOk()
+    public async Task IngestWeightBatch_DuplicateBatchId_ReturnsOk()
     {
-        // Arrange
-        var createRequest = new CreateReceptionRequest("Jane", "Smith", null);
-        var createResponse = await _client.PostAsJsonAsync("/api/receptions", createRequest);
-        var created = await createResponse.Content.ReadFromJsonAsync<CreateReceptionResponse>();
+        var batchId = Guid.NewGuid();
+        var request = new IngestWeightBatchRequest(
+            batchId,
+            "scale-001",
+            "Warehouse A",
+            DateTime.UtcNow,
+            new List<IngestWeightReadingRequest>
+            {
+                new(100m, 5, DateTime.UtcNow.AddMinutes(-2), DateTime.UtcNow, 5)
+            });
 
-        // Act
-        var response = await _client.GetAsync($"/api/receptions/{created!.Id}");
+        var firstResponse = await _client.PostAsJsonAsync("/api/weights", request);
+        firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var reception = await response.Content.ReadFromJsonAsync<ReceptionDto>();
-        reception.Should().NotBeNull();
-        reception!.FirstName.Should().Be("Jane");
-        reception.LastName.Should().Be("Smith");
-        reception.Status.Should().Be("Pending");
-    }
-
-    [Fact]
-    public async Task GetReceptionById_WhenNotExists_ReturnsNotFound()
-    {
-        // Act
-        var response = await _client.GetAsync($"/api/receptions/{Guid.NewGuid()}");
-
-        // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+        var secondResponse = await _client.PostAsJsonAsync("/api/weights", request);
+        secondResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

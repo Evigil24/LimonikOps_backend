@@ -10,7 +10,7 @@ public class CrossModuleBoundaryTests
     {
         // When more modules are added, add their namespaces here
         // For now, verify the pattern works with a self-referencing check
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Receptions.ReceptionId).Assembly)
+        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
             .ShouldNot()
             .HaveDependencyOn("LimonikOne.Modules.Billing")
             .GetResult();
@@ -22,7 +22,7 @@ public class CrossModuleBoundaryTests
     [Fact]
     public void Reception_Application_Should_Not_Reference_Other_Modules()
     {
-        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Application.Receptions.Create.CreateReceptionCommand).Assembly)
+        var result = Types.InAssembly(typeof(LimonikOne.Modules.Reception.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly)
             .ShouldNot()
             .HaveDependencyOn("LimonikOne.Modules.Billing")
             .GetResult();
