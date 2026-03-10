@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
     <PropertyGroup>
         <RootNamespace>LimonikOne.Host</RootNamespace>
+        <UserSecretsId>LimonikOne.Host-2025</UserSecretsId>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Serilog.AspNetCore" />

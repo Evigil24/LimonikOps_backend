@@ -41,6 +41,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseSerilogRequestLogging();
 app.MapControllers();
+app.MapHealthChecks("/health");
 app.UseModules();
 
 app.Run();

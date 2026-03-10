@@ -48,5 +48,9 @@
             Include="Testcontainers.PostgreSql"
             Version="$(TestcontainersPostgresVersion)"
         />
+        <PackageVersion
+            Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
+            Version="$(HealthChecksEfCoreVersion)"
+        />
     </ItemGroup>
 </Project>

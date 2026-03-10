@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace LimonikOne.Modules.Reception.Api;
 
@@ -24,10 +25,23 @@ public sealed class ReceptionModule : IModule
             .GetSection(PostgresOptions.SectionName)
             .Get<PostgresOptions>();
 
+        if (postgresOptions is null || string.IsNullOrWhiteSpace(postgresOptions.ConnectionString))
+        {
+            throw new InvalidOperationException(
+                $"Database configuration is missing. Set '{PostgresOptions.SectionName}:ConnectionString' in appsettings (e.g. appsettings.Development.json).");
+        }
+
         services.AddDbContext<ReceptionDbContext>(options =>
         {
-            options.UseNpgsql(postgresOptions!.ConnectionString);
+            options.UseNpgsql(postgresOptions.ConnectionString);
         });
+
+        services
+            .AddHealthChecks()
+            .AddDbContextCheck<ReceptionDbContext>(
+                name: "postgres",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: new[] { "db", "ready" });
 
         // Weight Batch ingestion
         services.AddScoped<IWeightBatchRepository, WeightBatchRepository>();

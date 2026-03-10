@@ -23,5 +23,6 @@
         <FluentAssertionsVersion>8.8.0</FluentAssertionsVersion>
         <MicrosoftAspNetCoreMvcTestingVersion>10.0.3</MicrosoftAspNetCoreMvcTestingVersion>
         <TestcontainersPostgresVersion>4.10.0</TestcontainersPostgresVersion>
+        <HealthChecksEfCoreVersion>10.0.3</HealthChecksEfCoreVersion>
     </PropertyGroup>
 </Project>
