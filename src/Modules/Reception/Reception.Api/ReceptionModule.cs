@@ -28,7 +28,8 @@ public sealed class ReceptionModule : IModule
         if (postgresOptions is null || string.IsNullOrWhiteSpace(postgresOptions.ConnectionString))
         {
             throw new InvalidOperationException(
-                $"Database configuration is missing. Set '{PostgresOptions.SectionName}:ConnectionString' in appsettings (e.g. appsettings.Development.json).");
+                $"Database configuration is missing. Set '{PostgresOptions.SectionName}:ConnectionString' in appsettings (e.g. appsettings.Development.json)."
+            );
         }
 
         services.AddDbContext<ReceptionDbContext>(options =>
@@ -41,7 +42,8 @@ public sealed class ReceptionModule : IModule
             .AddDbContextCheck<ReceptionDbContext>(
                 name: "postgres",
                 failureStatus: HealthStatus.Unhealthy,
-                tags: new[] { "db", "ready" });
+                tags: new[] { "db", "ready" }
+            );
 
         // Weight Batch ingestion
         services.AddScoped<IWeightBatchRepository, WeightBatchRepository>();
