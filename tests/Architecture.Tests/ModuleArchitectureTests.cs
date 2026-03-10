@@ -91,4 +91,90 @@ public class ModuleArchitectureTests
                     : "none"
             );
     }
+
+    // --- Print module architecture tests ---
+
+    private const string PrintDomainNamespace = "LimonikOne.Modules.Print.Domain";
+    private const string PrintApplicationNamespace = "LimonikOne.Modules.Print.Application";
+    private const string PrintInfrastructureNamespace = "LimonikOne.Modules.Print.Infrastructure";
+
+    [Fact]
+    public void Print_Domain_Should_Not_Depend_On_Application()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Print.Domain.PrintJobs.PrintJobId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(PrintApplicationNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Print.Domain should not depend on Application. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Print_Domain_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Print.Domain.PrintJobs.PrintJobId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(PrintInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Print.Domain should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Print_Application_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Print.Application.PrintJobs.Enqueue.EnqueuePrintJobCommand).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(PrintInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Print.Application should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Print_Api_Should_Not_Depend_On_Infrastructure_Directly()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Print.Api.PrintModule).Assembly)
+            .That()
+            .ResideInNamespace("LimonikOne.Modules.Print.Api.Controllers")
+            .ShouldNot()
+            .HaveDependencyOn(PrintInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Print.Api controllers should not depend on Infrastructure directly. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
 }

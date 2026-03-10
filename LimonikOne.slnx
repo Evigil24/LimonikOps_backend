@@ -9,6 +9,12 @@
         <Project Path="src/Shared/Shared.Abstractions/Shared.Abstractions.csproj" />
         <Project Path="src/Shared/Shared.Infrastructure/Shared.Infrastructure.csproj" />
     </Folder>
+    <Folder Name="/src/Modules/Print/">
+        <Project Path="src/Modules/Print/Print.Api/Print.Api.csproj" />
+        <Project Path="src/Modules/Print/Print.Application/Print.Application.csproj" />
+        <Project Path="src/Modules/Print/Print.Domain/Print.Domain.csproj" />
+        <Project Path="src/Modules/Print/Print.Infrastructure/Print.Infrastructure.csproj" />
+    </Folder>
     <Folder Name="/src/Modules/Scale/">
         <Project Path="src/Modules/Scale/Scale.Api/Scale.Api.csproj" />
         <Project Path="src/Modules/Scale/Scale.Application/Scale.Application.csproj" />
@@ -20,6 +26,8 @@
         <Project Path="tests/Schema.Tests/Schema.Tests.csproj" />
     </Folder>
     <Folder Name="/tests/Modules/">
+        <Project Path="tests/Modules/Print.UnitTests/Print.UnitTests.csproj" />
+        <Project Path="tests/Modules/Print.IntegrationTests/Print.IntegrationTests.csproj" />
         <Project Path="tests/Modules/Scale.UnitTests/Scale.UnitTests.csproj" />
         <Project Path="tests/Modules/Scale.IntegrationTests/Scale.IntegrationTests.csproj" />
     </Folder>

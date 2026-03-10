@@ -5,31 +5,67 @@ namespace LimonikOne.Tests.Architecture;
 
 public class CrossModuleBoundaryTests
 {
-    [Fact]
-    public void Scale_Domain_Should_Not_Reference_Other_Modules()
+    [Theory]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Billing")]
+    public void Scale_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
-        // When more modules are added, add their namespaces here
-        // For now, verify the pattern works with a self-referencing check
         var result = Types
             .InAssembly(typeof(LimonikOne.Modules.Scale.Domain.Weights.WeightBatchId).Assembly)
             .ShouldNot()
-            .HaveDependencyOn("LimonikOne.Modules.Billing")
+            .HaveDependencyOn(otherModule)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue("Scale.Domain should not reference other modules");
+        result.IsSuccessful.Should().BeTrue("Scale.Domain should not reference {0}", otherModule);
     }
 
-    [Fact]
-    public void Scale_Application_Should_Not_Reference_Other_Modules()
+    [Theory]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Billing")]
+    public void Scale_Application_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
             .InAssembly(
                 typeof(LimonikOne.Modules.Scale.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly
             )
             .ShouldNot()
-            .HaveDependencyOn("LimonikOne.Modules.Billing")
+            .HaveDependencyOn(otherModule)
             .GetResult();
 
-        result.IsSuccessful.Should().BeTrue("Scale.Application should not reference other modules");
+        result
+            .IsSuccessful.Should()
+            .BeTrue("Scale.Application should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Billing")]
+    public void Print_Domain_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Print.Domain.PrintJobs.PrintJobId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue("Print.Domain should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Billing")]
+    public void Print_Application_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Print.Application.PrintJobs.Enqueue.EnqueuePrintJobCommand).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue("Print.Application should not reference {0}", otherModule);
     }
 }
