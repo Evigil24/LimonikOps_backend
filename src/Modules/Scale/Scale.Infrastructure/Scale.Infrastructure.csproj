@@ -19,5 +19,6 @@
     <ItemGroup>
         <InternalsVisibleTo Include="Scale.Api" />
         <InternalsVisibleTo Include="Scale.IntegrationTests" />
+        <InternalsVisibleTo Include="Schema.Tests" />
     </ItemGroup>
 </Project>

@@ -52,5 +52,9 @@
             Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
             Version="$(HealthChecksEfCoreVersion)"
         />
+        <PackageVersion
+            Include="Microsoft.Extensions.Configuration.UserSecrets"
+            Version="$(UserSecretsVersion)"
+        />
     </ItemGroup>
 </Project>
