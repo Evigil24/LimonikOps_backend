@@ -1,6 +1,7 @@
 using LimonikOne.Modules.Scale.Domain.Weights;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Repositories;
 
@@ -30,6 +31,15 @@ internal sealed class WeightBatchRepository : IWeightBatchRepository
     )
     {
         await _dbContext.WeightBatches.AddAsync(batch, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
+        try
+        {
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+        catch (DbUpdateException ex)
+            when (ex.InnerException is PostgresException { SqlState: "23505" } pgEx
+                && pgEx.ConstraintName == "IX_weight_batches_external_batch_id")
+        {
+            // Duplicate external_batch_id — treat as idempotent success.
+        }
     }
 }

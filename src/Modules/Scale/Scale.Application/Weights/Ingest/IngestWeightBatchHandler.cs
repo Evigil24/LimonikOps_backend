@@ -17,11 +17,15 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
         CancellationToken cancellationToken = default
     )
     {
-        var exists = await _weightBatchRepository.ExistsByExternalBatchIdAsync(
-            command.BatchId,
-            cancellationToken
-        );
-        if (exists)
+        // Fast-path: avoid building the entity on the hot path for obvious duplicates.
+        // The repository's AddAsync is the authoritative idempotency guard via the
+        // unique constraint on external_batch_id.
+        if (
+            await _weightBatchRepository.ExistsByExternalBatchIdAsync(
+                command.BatchId,
+                cancellationToken
+            )
+        )
         {
             return Result.Success();
         }
