@@ -141,8 +141,7 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
     private string GetBaseUrl()
     {
         var resource = _options.Resource.TrimEnd('/');
-        var version = _options.ApiVersion;
-        return $"{resource}/api/data/v{version}/";
+        return $"{resource}/data/";
     }
 
     private static string BuildQueryString(string? filter, string? select, string? expand)

@@ -27,24 +27,18 @@ public sealed class DynamicsHealthCheck : IHealthCheck
             string.IsNullOrWhiteSpace(_options.TenantId)
             || string.IsNullOrWhiteSpace(_options.ClientId)
             || string.IsNullOrWhiteSpace(_options.Resource)
+            || string.IsNullOrWhiteSpace(_options.HealthCheckEntitySet)
         )
         {
             return HealthCheckResult.Unhealthy(
-                "Dynamics is not configured. Set TenantId, ClientId, and Resource in appsettings."
+                "Dynamics is not configured. Set TenantId, ClientId, Resource, and HealthCheckEntitySet in appsettings."
             );
         }
 
         try
         {
-            // Call a minimal endpoint to verify auth and connectivity.
-            // organizations always exists and has one row per Dataverse environment.
-            await _dynamicsClient.GetAsync<OrganizationRef>(
-                "organizations",
-                filter: null,
-                select: "organizationid",
-                expand: null,
-                cancellationToken
-            );
+            // Call a lightweight collection endpoint (returns { "value": [] }) to verify auth and connectivity.
+            await _dynamicsClient.GetAsync<object>(_options.HealthCheckEntitySet, null, null, null, cancellationToken);
             return HealthCheckResult.Healthy("Dynamics connection successful.");
         }
         catch (Exception ex)
@@ -52,6 +46,4 @@ public sealed class DynamicsHealthCheck : IHealthCheck
             return HealthCheckResult.Unhealthy("Dynamics connection failed.", ex);
         }
     }
-
-    private sealed record OrganizationRef(Guid OrganizationId);
 }
