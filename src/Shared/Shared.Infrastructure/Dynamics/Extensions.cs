@@ -1,6 +1,7 @@
 using LimonikOne.Shared.Abstractions.Dynamics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
 
@@ -21,6 +22,14 @@ public static class Extensions
             .AddHttpClient<IDynamicsHttpClient, DynamicsHttpClient>()
             .AddHttpMessageHandler<DynamicsAuthHandler>()
             .AddStandardResilienceHandler();
+
+        services
+            .AddHealthChecks()
+            .AddCheck<DynamicsHealthCheck>(
+                name: "dynamics",
+                failureStatus: HealthStatus.Unhealthy,
+                tags: new[] { "dynamics", "ready" }
+            );
 
         return services;
     }
