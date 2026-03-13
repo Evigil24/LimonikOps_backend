@@ -1,11 +1,11 @@
 using FluentValidation;
 using LimonikOne.Modules.Scale.Api.Filters;
-using LimonikOne.Modules.Scale.Application.Weights.Ingest;
+using LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LimonikOne.Modules.Scale.Api.Controllers;
+namespace LimonikOne.Modules.Scale.Api.Controllers.WeightBatches;
 
 [ApiController]
 [Route("api/weights")]

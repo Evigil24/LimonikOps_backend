@@ -1,4 +1,6 @@
-namespace LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
+
+namespace LimonikOne.Modules.Scale.Domain.WeightReadings;
 
 public interface IWeightReadingRepository
 {

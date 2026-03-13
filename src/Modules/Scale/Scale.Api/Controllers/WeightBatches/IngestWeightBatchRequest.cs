@@ -1,4 +1,4 @@
-namespace LimonikOne.Modules.Scale.Api.Controllers;
+namespace LimonikOne.Modules.Scale.Api.Controllers.WeightBatches;
 
 public sealed record IngestWeightBatchRequest(
     Guid BatchId,

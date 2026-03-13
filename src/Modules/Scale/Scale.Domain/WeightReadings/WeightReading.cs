@@ -1,6 +1,7 @@
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
 using LimonikOne.Shared.Abstractions.Domain;
 
-namespace LimonikOne.Modules.Scale.Domain.Weights;
+namespace LimonikOne.Modules.Scale.Domain.WeightReadings;
 
 public sealed class WeightReading : AggregateRoot<WeightReadingId>
 {

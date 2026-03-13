@@ -14,7 +14,9 @@ public class ModuleArchitectureTests
     public void Domain_Should_Not_Depend_On_Application()
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Scale.Domain.Weights.WeightBatchId).Assembly)
+            .InAssembly(
+                typeof(LimonikOne.Modules.Scale.Domain.WeightBatches.WeightBatchId).Assembly
+            )
             .ShouldNot()
             .HaveDependencyOn(ApplicationNamespace)
             .GetResult();
@@ -33,7 +35,9 @@ public class ModuleArchitectureTests
     public void Domain_Should_Not_Depend_On_Infrastructure()
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Scale.Domain.Weights.WeightBatchId).Assembly)
+            .InAssembly(
+                typeof(LimonikOne.Modules.Scale.Domain.WeightBatches.WeightBatchId).Assembly
+            )
             .ShouldNot()
             .HaveDependencyOn(InfrastructureNamespace)
             .GetResult();
@@ -53,7 +57,7 @@ public class ModuleArchitectureTests
     {
         var result = Types
             .InAssembly(
-                typeof(LimonikOne.Modules.Scale.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly
+                typeof(LimonikOne.Modules.Scale.Application.WeightBatches.Ingest.IngestWeightBatchCommand).Assembly
             )
             .ShouldNot()
             .HaveDependencyOn(InfrastructureNamespace)

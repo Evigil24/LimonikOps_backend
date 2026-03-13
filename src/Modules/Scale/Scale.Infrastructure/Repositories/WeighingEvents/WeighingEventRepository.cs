@@ -2,7 +2,7 @@ using LimonikOne.Modules.Scale.Domain.WeighingEvents;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace LimonikOne.Modules.Scale.Infrastructure.Repositories;
+namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.WeighingEvents;
 
 internal sealed class WeighingEventRepository : IWeighingEventRepository
 {

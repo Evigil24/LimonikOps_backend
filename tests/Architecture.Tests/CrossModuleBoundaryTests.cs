@@ -11,7 +11,9 @@ public class CrossModuleBoundaryTests
     public void Scale_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Scale.Domain.Weights.WeightBatchId).Assembly)
+            .InAssembly(
+                typeof(LimonikOne.Modules.Scale.Domain.WeightBatches.WeightBatchId).Assembly
+            )
             .ShouldNot()
             .HaveDependencyOn(otherModule)
             .GetResult();
@@ -26,7 +28,7 @@ public class CrossModuleBoundaryTests
     {
         var result = Types
             .InAssembly(
-                typeof(LimonikOne.Modules.Scale.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly
+                typeof(LimonikOne.Modules.Scale.Application.WeightBatches.Ingest.IngestWeightBatchCommand).Assembly
             )
             .ShouldNot()
             .HaveDependencyOn(otherModule)

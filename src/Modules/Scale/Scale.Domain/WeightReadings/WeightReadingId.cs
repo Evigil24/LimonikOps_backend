@@ -1,4 +1,4 @@
-namespace LimonikOne.Modules.Scale.Domain.Weights;
+namespace LimonikOne.Modules.Scale.Domain.WeightReadings;
 
 public readonly record struct WeightReadingId(Guid Value)
 {

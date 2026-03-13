@@ -1,11 +1,14 @@
 using FluentValidation;
 using LimonikOne.Modules.Scale.Api.Filters;
 using LimonikOne.Modules.Scale.Application;
-using LimonikOne.Modules.Scale.Application.Weights.Ingest;
+using LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 using LimonikOne.Modules.Scale.Domain.WeighingEvents;
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
-using LimonikOne.Modules.Scale.Infrastructure.Repositories;
+using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeighingEvents;
+using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightBatches;
+using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightReadings;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
 using LimonikOne.Shared.Infrastructure.Database;

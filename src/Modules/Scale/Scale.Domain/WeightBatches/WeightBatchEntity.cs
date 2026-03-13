@@ -1,6 +1,6 @@
 using LimonikOne.Shared.Abstractions.Domain;
 
-namespace LimonikOne.Modules.Scale.Domain.Weights;
+namespace LimonikOne.Modules.Scale.Domain.WeightBatches;
 
 public sealed class WeightBatchEntity : AggregateRoot<WeightBatchId>
 {

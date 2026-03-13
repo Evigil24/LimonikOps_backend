@@ -1,4 +1,4 @@
-namespace LimonikOne.Modules.Scale.Domain.Weights;
+namespace LimonikOne.Modules.Scale.Domain.WeightBatches;
 
 public interface IWeightBatchRepository
 {

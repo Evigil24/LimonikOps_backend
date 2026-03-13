@@ -1,8 +1,8 @@
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations;
+namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations.WeightBatches;
 
 internal sealed class WeightBatchConfiguration : IEntityTypeConfiguration<WeightBatchEntity>
 {

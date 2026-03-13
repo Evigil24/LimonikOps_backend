@@ -1,8 +1,9 @@
 using LimonikOne.Modules.Scale.Domain.WeighingEvents;
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Scale.Application.Weights.Ingest;
+namespace LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 
 internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBatchCommand>
 {

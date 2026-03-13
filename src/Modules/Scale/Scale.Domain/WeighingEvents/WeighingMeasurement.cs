@@ -1,4 +1,4 @@
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 
 namespace LimonikOne.Modules.Scale.Domain.WeighingEvents;
 

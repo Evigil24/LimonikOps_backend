@@ -1,5 +1,6 @@
 using LimonikOne.Modules.Scale.Domain.WeighingEvents;
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Database;

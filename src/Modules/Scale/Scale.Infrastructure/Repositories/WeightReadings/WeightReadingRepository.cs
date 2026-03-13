@@ -1,8 +1,9 @@
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
-namespace LimonikOne.Modules.Scale.Infrastructure.Repositories;
+namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightReadings;
 
 internal sealed class WeightReadingRepository : IWeightReadingRepository
 {

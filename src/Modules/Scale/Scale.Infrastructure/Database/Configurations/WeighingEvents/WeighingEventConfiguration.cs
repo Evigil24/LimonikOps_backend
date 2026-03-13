@@ -1,9 +1,9 @@
 using LimonikOne.Modules.Scale.Domain.WeighingEvents;
-using LimonikOne.Modules.Scale.Domain.Weights;
+using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations;
+namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations.WeighingEvents;
 
 internal sealed class WeighingEventConfiguration : IEntityTypeConfiguration<WeighingEventEntity>
 {

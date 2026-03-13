@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using LimonikOne.Modules.Scale.Api.Controllers;
+using LimonikOne.Modules.Scale.Api.Controllers.WeightBatches;
 
 namespace LimonikOne.Modules.Scale.IntegrationTests;
 
