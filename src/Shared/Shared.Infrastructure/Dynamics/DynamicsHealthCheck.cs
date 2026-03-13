@@ -38,7 +38,13 @@ public sealed class DynamicsHealthCheck : IHealthCheck
         try
         {
             // Call a lightweight collection endpoint (returns { "value": [] }) to verify auth and connectivity.
-            await _dynamicsClient.GetAsync<object>(_options.HealthCheckEntitySet, null, null, null, cancellationToken);
+            await _dynamicsClient.GetAsync<object>(
+                _options.HealthCheckEntitySet,
+                null,
+                null,
+                null,
+                cancellationToken
+            );
             return HealthCheckResult.Healthy("Dynamics connection successful.");
         }
         catch (Exception ex)
