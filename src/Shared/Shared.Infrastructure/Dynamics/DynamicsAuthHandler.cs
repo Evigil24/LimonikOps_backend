@@ -79,15 +79,15 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
-        var doc = JsonDocument.Parse(json);
-        var root = doc.RootElement;
-
-        var accessToken =
-            root.GetProperty("access_token").GetString()
-            ?? throw new InvalidOperationException("Token response missing access_token.");
-        var expiresIn = root.GetProperty("expires_in").GetInt32();
-
-        return new TokenResponse(accessToken, expiresIn);
+        using (var doc = JsonDocument.Parse(json))
+        {
+            var root = doc.RootElement;
+            var accessToken =
+                root.GetProperty("access_token").GetString()
+                ?? throw new InvalidOperationException("Token response missing access_token.");
+            var expiresIn = root.GetProperty("expires_in").GetInt32();
+            return new TokenResponse(accessToken, expiresIn);
+        }
     }
 
     private sealed record TokenResponse(string AccessToken, int ExpiresIn);
