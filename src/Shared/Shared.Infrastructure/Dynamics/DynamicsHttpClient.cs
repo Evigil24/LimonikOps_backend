@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 using LimonikOne.Shared.Abstractions.Dynamics;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
@@ -14,11 +15,17 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
     };
 
     private readonly HttpClient _httpClient;
+    private readonly ILogger<DynamicsHttpClient> _logger;
     private readonly DynamicsOptions _options;
 
-    public DynamicsHttpClient(HttpClient httpClient, IOptions<DynamicsOptions> options)
+    public DynamicsHttpClient(
+        HttpClient httpClient,
+        ILogger<DynamicsHttpClient> logger,
+        IOptions<DynamicsOptions> options
+    )
     {
         _httpClient = httpClient;
+        _logger = logger;
         _options = options.Value;
     }
 
@@ -35,7 +42,12 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
         var url = $"{baseUrl}{entitySet}{queryParams}";
 
         var response = await _httpClient.GetAsync(url, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessOrThrowAsync(
+            $"Dynamics GET {entitySet}",
+            url,
+            _logger,
+            cancellationToken
+        );
 
         var content = await response.Content.ReadAsStringAsync(cancellationToken);
         var wrapper =
@@ -62,7 +74,12 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
             return default;
         }
 
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessOrThrowAsync(
+            $"Dynamics GET {entitySet}({key})",
+            url,
+            _logger,
+            cancellationToken
+        );
 
         var content = await response.Content.ReadAsStringAsync(cancellationToken);
         return JsonSerializer.Deserialize<T>(content, JsonOptions);
@@ -88,7 +105,12 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
             return default;
         }
 
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessOrThrowAsync(
+            $"Dynamics POST {entitySet}",
+            url,
+            _logger,
+            cancellationToken
+        );
 
         var content = await response.Content.ReadAsStringAsync(cancellationToken);
         return string.IsNullOrEmpty(content)
@@ -108,7 +130,12 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
 
         var content = JsonContent.Create(payload, options: JsonOptions);
         var response = await _httpClient.PatchAsync(url, content, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessOrThrowAsync(
+            $"Dynamics PATCH {entitySet}({key})",
+            url,
+            _logger,
+            cancellationToken
+        );
     }
 
     private string GetBaseUrl()

@@ -1,6 +1,6 @@
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
@@ -10,6 +10,7 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
     private const int RefreshBeforeExpirySeconds = 300; // 5 minutes
 
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly ILogger<DynamicsAuthHandler> _logger;
     private readonly DynamicsOptions _options;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     private string? _cachedToken;
@@ -17,10 +18,12 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
 
     public DynamicsAuthHandler(
         IHttpClientFactory httpClientFactory,
+        ILogger<DynamicsAuthHandler> logger,
         IOptions<DynamicsOptions> options
     )
     {
         _httpClientFactory = httpClientFactory;
+        _logger = logger;
         _options = options.Value;
     }
 
@@ -76,7 +79,12 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
         );
 
         var response = await tokenClient.PostAsync(tokenUrl, formContent, cancellationToken);
-        response.EnsureSuccessStatusCode();
+        await response.EnsureSuccessOrThrowAsync(
+            "Dynamics token acquisition",
+            tokenUrl,
+            _logger,
+            cancellationToken
+        );
 
         var json = await response.Content.ReadAsStringAsync(cancellationToken);
         using (var doc = JsonDocument.Parse(json))
