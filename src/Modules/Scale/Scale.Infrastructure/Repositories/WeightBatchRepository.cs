@@ -30,6 +30,5 @@ internal sealed class WeightBatchRepository : IWeightBatchRepository
     )
     {
         await _dbContext.WeightBatches.AddAsync(batch, cancellationToken);
-        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 }
