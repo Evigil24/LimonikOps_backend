@@ -13,7 +13,7 @@ public static class Extensions
     {
         services.Configure<DynamicsOptions>(configuration.GetSection(DynamicsOptions.SectionName));
 
-        services.AddHttpClient("Dynamics.Token");
+        services.AddHttpClient("Dynamics.Token").AddStandardResilienceHandler();
 
         services.AddTransient<DynamicsAuthHandler>();
 
