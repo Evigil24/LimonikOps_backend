@@ -33,40 +33,5 @@ internal sealed class WeightBatchConfiguration : IEntityTypeConfiguration<Weight
         builder.Property(b => b.SentAt).HasColumnName("sent_at").IsRequired();
 
         builder.Property(b => b.ReceivedAt).HasColumnName("received_at").IsRequired();
-
-        builder.OwnsMany(
-            b => b.Readings,
-            reading =>
-            {
-                reading.ToTable("weight_readings");
-
-                reading.WithOwner().HasForeignKey("weight_batch_id");
-
-                reading.HasKey(r => r.Id);
-
-                reading
-                    .Property(r => r.Id)
-                    .HasColumnName("id")
-                    .HasConversion(id => id.Value, value => WeightReadingId.From(value))
-                    .ValueGeneratedNever();
-
-                reading
-                    .Property(r => r.Weight)
-                    .HasColumnName("weight")
-                    .HasPrecision(18, 4)
-                    .IsRequired();
-
-                reading.Property(r => r.Count).HasColumnName("count").IsRequired();
-
-                reading
-                    .Property(r => r.FirstTimestamp)
-                    .HasColumnName("first_timestamp")
-                    .IsRequired();
-
-                reading.Property(r => r.LastTimestamp).HasColumnName("last_timestamp").IsRequired();
-
-                reading.Property(r => r.StableCount).HasColumnName("stable_count").IsRequired();
-            }
-        );
     }
 }

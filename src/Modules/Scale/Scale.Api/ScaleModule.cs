@@ -52,6 +52,7 @@ public sealed class ScaleModule : IModule
 
         // Weight Batch ingestion
         services.AddScoped<IWeightBatchRepository, WeightBatchRepository>();
+        services.AddScoped<IWeightReadingRepository, WeightReadingRepository>();
         services.AddScoped<ICommandHandler<IngestWeightBatchCommand>, IngestWeightBatchHandler>();
         services.AddScoped<IValidator<IngestWeightBatchCommand>, IngestWeightBatchValidator>();
 

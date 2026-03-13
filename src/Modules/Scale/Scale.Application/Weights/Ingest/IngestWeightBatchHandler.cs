@@ -7,6 +7,7 @@ namespace LimonikOne.Modules.Scale.Application.Weights.Ingest;
 internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBatchCommand>
 {
     private readonly IWeightBatchRepository _weightBatchRepository;
+    private readonly IWeightReadingRepository _weightReadingRepository;
     private readonly IWeighingEventRepository _weighingEventRepository;
     private readonly IScaleUnitOfWork _unitOfWork;
 
@@ -14,11 +15,13 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
 
     public IngestWeightBatchHandler(
         IWeightBatchRepository weightBatchRepository,
+        IWeightReadingRepository weightReadingRepository,
         IWeighingEventRepository weighingEventRepository,
         IScaleUnitOfWork unitOfWork
     )
     {
         _weightBatchRepository = weightBatchRepository;
+        _weightReadingRepository = weightReadingRepository;
         _weighingEventRepository = weighingEventRepository;
         _unitOfWork = unitOfWork;
     }
@@ -37,9 +40,19 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
             return Result.Success();
         }
 
+        var batch = WeightBatchEntity.Create(
+            command.BatchId,
+            command.DeviceId,
+            command.Location,
+            command.SentAt
+        );
+
+        await _weightBatchRepository.AddAsync(batch, cancellationToken);
+
         var readings = command
             .Readings.Select(r =>
                 WeightReading.Create(
+                    batch.Id,
                     r.Weight,
                     r.Count,
                     r.FirstTimestamp,
@@ -49,20 +62,12 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
             )
             .ToList();
 
-        var batch = WeightBatchEntity.Create(
-            command.BatchId,
-            command.DeviceId,
-            command.Location,
-            command.SentAt,
-            readings
-        );
-
-        await _weightBatchRepository.AddAsync(batch, cancellationToken);
+        await _weightReadingRepository.AddRangeAsync(readings, cancellationToken);
 
         await ClassifyReadingsIntoEventsAsync(
             command.DeviceId,
             command.Location,
-            batch.Readings,
+            readings,
             cancellationToken
         );
 

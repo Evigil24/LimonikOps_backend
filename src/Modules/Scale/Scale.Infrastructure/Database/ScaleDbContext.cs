@@ -7,6 +7,7 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database;
 internal sealed class ScaleDbContext : DbContext
 {
     public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
+    public DbSet<WeightReading> WeightReadings => Set<WeightReading>();
     public DbSet<WeighingEventEntity> WeighingEvents => Set<WeighingEventEntity>();
 
     public ScaleDbContext(DbContextOptions<ScaleDbContext> options)

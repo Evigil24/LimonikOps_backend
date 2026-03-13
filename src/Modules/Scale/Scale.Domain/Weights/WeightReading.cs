@@ -1,8 +1,10 @@
+using LimonikOne.Shared.Abstractions.Domain;
+
 namespace LimonikOne.Modules.Scale.Domain.Weights;
 
-public sealed class WeightReading
+public sealed class WeightReading : AggregateRoot<WeightReadingId>
 {
-    public WeightReadingId Id { get; private init; }
+    public WeightBatchId BatchId { get; private set; }
     public decimal Weight { get; private set; }
     public int Count { get; private set; }
     public DateTime FirstTimestamp { get; private set; }
@@ -12,6 +14,7 @@ public sealed class WeightReading
     private WeightReading() { } // EF Core
 
     public static WeightReading Create(
+        WeightBatchId batchId,
         decimal weight,
         int count,
         DateTime firstTimestamp,
@@ -22,6 +25,7 @@ public sealed class WeightReading
         return new WeightReading
         {
             Id = WeightReadingId.New(),
+            BatchId = batchId,
             Weight = weight,
             Count = count,
             FirstTimestamp = firstTimestamp,
