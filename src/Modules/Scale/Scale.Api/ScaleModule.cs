@@ -2,12 +2,12 @@ using FluentValidation;
 using LimonikOne.Modules.Scale.Api.Filters;
 using LimonikOne.Modules.Scale.Application;
 using LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
-using LimonikOne.Modules.Scale.Domain.WeighingEvents;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightEvents;
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
-using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeighingEvents;
 using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightBatches;
+using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightEvents;
 using LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightReadings;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
@@ -59,8 +59,8 @@ public sealed class ScaleModule : IModule
         services.AddScoped<ICommandHandler<IngestWeightBatchCommand>, IngestWeightBatchHandler>();
         services.AddScoped<IValidator<IngestWeightBatchCommand>, IngestWeightBatchValidator>();
 
-        // Weighing Events
-        services.AddScoped<IWeighingEventRepository, WeighingEventRepository>();
+        // Weight Events
+        services.AddScoped<IWeightEventRepository, WeightEventRepository>();
 
         services.AddScoped<ApiKeyAuthFilter>();
     }

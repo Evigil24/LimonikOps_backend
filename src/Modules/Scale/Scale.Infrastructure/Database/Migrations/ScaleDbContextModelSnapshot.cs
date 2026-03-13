@@ -23,7 +23,7 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingEventEntity", b =>
+            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightEventEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -74,7 +74,7 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
 
                     b.HasIndex("DeviceId", "Status");
 
-                    b.ToTable("weighing_events", "scale");
+                    b.ToTable("weight_events", "scale");
                 });
 
             modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.Weights.WeightBatchEntity", b =>
@@ -173,9 +173,9 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
                     b.ToTable("weight_readings", "scale");
                 });
 
-            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingEventEntity", b =>
+            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightEventEntity", b =>
                 {
-                    b.OwnsMany("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingMeasurement", "Measurements", b1 =>
+                    b.OwnsMany("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightMeasurement", "Measurements", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uuid")
@@ -198,17 +198,17 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
                                 .HasColumnType("numeric(18,4)")
                                 .HasColumnName("weight");
 
-                            b1.Property<Guid>("weighing_event_id")
+                            b1.Property<Guid>("weight_event_id")
                                 .HasColumnType("uuid");
 
                             b1.HasKey("Id");
 
-                            b1.HasIndex("weighing_event_id");
+                            b1.HasIndex("weight_event_id");
 
-                            b1.ToTable("weighing_measurements", "scale");
+                            b1.ToTable("weight_measurements", "scale");
 
                             b1.WithOwner()
-                                .HasForeignKey("weighing_event_id");
+                                .HasForeignKey("weight_event_id");
                         });
 
                     b.Navigation("Measurements");

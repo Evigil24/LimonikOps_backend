@@ -1,5 +1,5 @@
-using LimonikOne.Modules.Scale.Domain.WeighingEvents;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightEvents;
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +9,7 @@ internal sealed class ScaleDbContext : DbContext
 {
     public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
     public DbSet<WeightReading> WeightReadings => Set<WeightReading>();
-    public DbSet<WeighingEventEntity> WeighingEvents => Set<WeighingEventEntity>();
+    public DbSet<WeightEventEntity> WeightEvents => Set<WeightEventEntity>();
 
     public ScaleDbContext(DbContextOptions<ScaleDbContext> options)
         : base(options) { }

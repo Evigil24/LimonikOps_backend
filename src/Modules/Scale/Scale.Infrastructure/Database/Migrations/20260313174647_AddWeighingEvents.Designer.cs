@@ -26,7 +26,7 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingEventEntity", b =>
+            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightEventEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid")
@@ -128,9 +128,9 @@ namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
                     b.ToTable("weight_batches", "scale");
                 });
 
-            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingEventEntity", b =>
+            modelBuilder.Entity("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightEventEntity", b =>
                 {
-                    b.OwnsMany("LimonikOne.Modules.Scale.Domain.WeighingEvents.WeighingMeasurement", "Measurements", b1 =>
+                    b.OwnsMany("LimonikOne.Modules.Scale.Domain.WeightEvents.WeightMeasurement", "Measurements", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uuid")

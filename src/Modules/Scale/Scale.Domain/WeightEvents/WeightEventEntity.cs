@@ -1,23 +1,23 @@
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Shared.Abstractions.Domain;
 
-namespace LimonikOne.Modules.Scale.Domain.WeighingEvents;
+namespace LimonikOne.Modules.Scale.Domain.WeightEvents;
 
-public sealed class WeighingEventEntity : AggregateRoot<WeighingEventId>
+public sealed class WeightEventEntity : AggregateRoot<WeightEventId>
 {
     public string DeviceId { get; private set; } = null!;
     public string Location { get; private set; } = null!;
-    public WeighingEventStatus Status { get; private set; }
+    public WeightEventStatus Status { get; private set; }
     public DateTime StartedAt { get; private set; }
     public DateTime? EndedAt { get; private set; }
     public decimal PeakWeight { get; private set; }
 
-    private readonly List<WeighingMeasurement> _measurements = [];
-    public IReadOnlyList<WeighingMeasurement> Measurements => _measurements.AsReadOnly();
+    private readonly List<WeightMeasurement> _measurements = [];
+    public IReadOnlyList<WeightMeasurement> Measurements => _measurements.AsReadOnly();
 
-    private WeighingEventEntity() { } // EF Core
+    private WeightEventEntity() { } // EF Core
 
-    public static WeighingEventEntity Start(
+    public static WeightEventEntity Start(
         string deviceId,
         string location,
         decimal weight,
@@ -26,21 +26,21 @@ public sealed class WeighingEventEntity : AggregateRoot<WeighingEventId>
         WeightReadingId sourceReadingId
     )
     {
-        var weighingEvent = new WeighingEventEntity
+        var weightEvent = new WeightEventEntity
         {
-            Id = WeighingEventId.New(),
+            Id = WeightEventId.New(),
             DeviceId = deviceId,
             Location = location,
-            Status = WeighingEventStatus.InProgress,
+            Status = WeightEventStatus.InProgress,
             StartedAt = timestamp,
             PeakWeight = weight,
         };
 
-        weighingEvent._measurements.Add(
-            WeighingMeasurement.Create(weight, timestamp, stableCount, sourceReadingId)
+        weightEvent._measurements.Add(
+            WeightMeasurement.Create(weight, timestamp, stableCount, sourceReadingId)
         );
 
-        return weighingEvent;
+        return weightEvent;
     }
 
     public void AddMeasurement(
@@ -50,15 +50,15 @@ public sealed class WeighingEventEntity : AggregateRoot<WeighingEventId>
         WeightReadingId sourceReadingId
     )
     {
-        if (Status == WeighingEventStatus.Completed)
+        if (Status == WeightEventStatus.Completed)
         {
             throw new InvalidOperationException(
-                "Cannot add measurements to a completed weighing event."
+                "Cannot add measurements to a completed weight event."
             );
         }
 
         _measurements.Add(
-            WeighingMeasurement.Create(weight, timestamp, stableCount, sourceReadingId)
+            WeightMeasurement.Create(weight, timestamp, stableCount, sourceReadingId)
         );
 
         if (weight > PeakWeight)
@@ -69,12 +69,12 @@ public sealed class WeighingEventEntity : AggregateRoot<WeighingEventId>
 
     public void Complete(DateTime endedAt)
     {
-        if (Status == WeighingEventStatus.Completed)
+        if (Status == WeightEventStatus.Completed)
         {
-            throw new InvalidOperationException("Weighing event is already completed.");
+            throw new InvalidOperationException("Weight event is already completed.");
         }
 
-        Status = WeighingEventStatus.Completed;
+        Status = WeightEventStatus.Completed;
         EndedAt = endedAt;
     }
 }

@@ -1,22 +1,22 @@
-using LimonikOne.Modules.Scale.Domain.WeighingEvents;
+using LimonikOne.Modules.Scale.Domain.WeightEvents;
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations.WeighingEvents;
+namespace LimonikOne.Modules.Scale.Infrastructure.Database.Configurations.WeightEvents;
 
-internal sealed class WeighingEventConfiguration : IEntityTypeConfiguration<WeighingEventEntity>
+internal sealed class WeightEventConfiguration : IEntityTypeConfiguration<WeightEventEntity>
 {
-    public void Configure(EntityTypeBuilder<WeighingEventEntity> builder)
+    public void Configure(EntityTypeBuilder<WeightEventEntity> builder)
     {
-        builder.ToTable("weighing_events");
+        builder.ToTable("weight_events");
 
         builder.HasKey(e => e.Id);
 
         builder
             .Property(e => e.Id)
             .HasColumnName("id")
-            .HasConversion(id => id.Value, value => WeighingEventId.From(value))
+            .HasConversion(id => id.Value, value => WeightEventId.From(value))
             .ValueGeneratedNever();
 
         builder.Property(e => e.DisplayId).HasColumnName("display_id").UseIdentityAlwaysColumn();
@@ -50,16 +50,16 @@ internal sealed class WeighingEventConfiguration : IEntityTypeConfiguration<Weig
             e => e.Measurements,
             measurement =>
             {
-                measurement.ToTable("weighing_measurements");
+                measurement.ToTable("weight_measurements");
 
-                measurement.WithOwner().HasForeignKey("weighing_event_id");
+                measurement.WithOwner().HasForeignKey("weight_event_id");
 
                 measurement.HasKey(m => m.Id);
 
                 measurement
                     .Property(m => m.Id)
                     .HasColumnName("id")
-                    .HasConversion(id => id.Value, value => WeighingMeasurementId.From(value))
+                    .HasConversion(id => id.Value, value => WeightMeasurementId.From(value))
                     .ValueGeneratedNever();
 
                 measurement

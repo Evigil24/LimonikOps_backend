@@ -1,5 +1,5 @@
-using LimonikOne.Modules.Scale.Domain.WeighingEvents;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
+using LimonikOne.Modules.Scale.Domain.WeightEvents;
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
 using LimonikOne.Shared.Abstractions.Application;
 
@@ -9,7 +9,7 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
 {
     private readonly IWeightBatchRepository _weightBatchRepository;
     private readonly IWeightReadingRepository _weightReadingRepository;
-    private readonly IWeighingEventRepository _weighingEventRepository;
+    private readonly IWeightEventRepository _weightEventRepository;
     private readonly IScaleUnitOfWork _unitOfWork;
 
     private const decimal WeightThreshold = 0m;
@@ -17,13 +17,13 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
     public IngestWeightBatchHandler(
         IWeightBatchRepository weightBatchRepository,
         IWeightReadingRepository weightReadingRepository,
-        IWeighingEventRepository weighingEventRepository,
+        IWeightEventRepository weightEventRepository,
         IScaleUnitOfWork unitOfWork
     )
     {
         _weightBatchRepository = weightBatchRepository;
         _weightReadingRepository = weightReadingRepository;
-        _weighingEventRepository = weighingEventRepository;
+        _weightEventRepository = weightEventRepository;
         _unitOfWork = unitOfWork;
     }
 
@@ -84,7 +84,7 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
         CancellationToken cancellationToken
     )
     {
-        var openEvent = await _weighingEventRepository.GetOpenEventByDeviceIdAsync(
+        var openEvent = await _weightEventRepository.GetOpenEventByDeviceIdAsync(
             deviceId,
             cancellationToken
         );
@@ -97,7 +97,7 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
             {
                 if (isAboveThreshold)
                 {
-                    openEvent = WeighingEventEntity.Start(
+                    openEvent = WeightEventEntity.Start(
                         deviceId,
                         location,
                         reading.Weight,
@@ -105,7 +105,7 @@ internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBat
                         reading.StableCount,
                         reading.Id
                     );
-                    await _weighingEventRepository.AddAsync(openEvent, cancellationToken);
+                    await _weightEventRepository.AddAsync(openEvent, cancellationToken);
                 }
             }
             else
