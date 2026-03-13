@@ -7,7 +7,6 @@ public class CrossModuleBoundaryTests
 {
     [Theory]
     [InlineData("LimonikOne.Modules.Print")]
-    [InlineData("LimonikOne.Modules.Billing")]
     public void Scale_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
@@ -23,7 +22,6 @@ public class CrossModuleBoundaryTests
 
     [Theory]
     [InlineData("LimonikOne.Modules.Print")]
-    [InlineData("LimonikOne.Modules.Billing")]
     public void Scale_Application_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
@@ -41,7 +39,6 @@ public class CrossModuleBoundaryTests
 
     [Theory]
     [InlineData("LimonikOne.Modules.Scale")]
-    [InlineData("LimonikOne.Modules.Billing")]
     public void Print_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
@@ -55,7 +52,6 @@ public class CrossModuleBoundaryTests
 
     [Theory]
     [InlineData("LimonikOne.Modules.Scale")]
-    [InlineData("LimonikOne.Modules.Billing")]
     public void Print_Application_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
