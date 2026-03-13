@@ -1,5 +1,6 @@
 using LimonikOne.Modules.Print.Api;
 using LimonikOne.Modules.Scale.Api;
+using LimonikOne.Shared.Infrastructure.Dynamics;
 using LimonikOne.Shared.Infrastructure.Extensions;
 using LimonikOne.Shared.Infrastructure.Modules;
 using Scalar.AspNetCore;
@@ -27,6 +28,7 @@ builder
 builder.Services.AddOpenApi();
 
 builder.Services.AddSharedInfrastructure();
+builder.Services.AddDynamics(builder.Configuration);
 
 // Discover and register modules
 var moduleAssemblies = new[] { typeof(ScaleModule).Assembly, typeof(PrintModule).Assembly };
