@@ -11,7 +11,7 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
 
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly DynamicsOptions _options;
-    private readonly object _lock = new();
+    private readonly SemaphoreSlim _semaphore = new(1, 1);
     private string? _cachedToken;
     private DateTimeOffset _tokenExpiresAt;
 
@@ -36,7 +36,8 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
 
     private async Task<string> GetTokenAsync(CancellationToken cancellationToken)
     {
-        lock (_lock)
+        await _semaphore.WaitAsync(cancellationToken);
+        try
         {
             if (
                 _cachedToken is not null
@@ -45,15 +46,15 @@ public sealed class DynamicsAuthHandler : DelegatingHandler
             {
                 return _cachedToken;
             }
-        }
 
-        var token = await AcquireTokenAsync(cancellationToken);
-
-        lock (_lock)
-        {
+            var token = await AcquireTokenAsync(cancellationToken);
             _cachedToken = token.AccessToken;
             _tokenExpiresAt = DateTimeOffset.UtcNow.AddSeconds(token.ExpiresIn);
             return _cachedToken;
+        }
+        finally
+        {
+            _semaphore.Release();
         }
     }
 
