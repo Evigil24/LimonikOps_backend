@@ -181,4 +181,91 @@ public class ModuleArchitectureTests
                     : "none"
             );
     }
+
+    // --- Product module architecture tests ---
+
+    private const string ProductDomainNamespace = "LimonikOne.Modules.Product.Domain";
+    private const string ProductApplicationNamespace = "LimonikOne.Modules.Product.Application";
+    private const string ProductInfrastructureNamespace =
+        "LimonikOne.Modules.Product.Infrastructure";
+
+    [Fact]
+    public void Product_Domain_Should_Not_Depend_On_Application()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.ProductDomainAssembly).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(ProductApplicationNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Product.Domain should not depend on Application. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Product_Domain_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.ProductDomainAssembly).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(ProductInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Product.Domain should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Product_Application_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Product.Application.ProductApplicationAssembly).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(ProductInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Product.Application should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Product_Api_Should_Not_Depend_On_Infrastructure_Directly()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Product.Api.ProductModule).Assembly)
+            .That()
+            .ResideInNamespace("LimonikOne.Modules.Product.Api.Controllers")
+            .ShouldNot()
+            .HaveDependencyOn(ProductInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Product.Api controllers should not depend on Infrastructure directly. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
 }
