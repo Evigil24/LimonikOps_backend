@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LimonikOne.Modules.Product.Api.Controllers;
 
 [ApiController]
-[Route("api/product-varieties")]
+[Route("api/product/varieties")]
 public sealed class VarietiesController : ControllerBase
 {
     [HttpGet]

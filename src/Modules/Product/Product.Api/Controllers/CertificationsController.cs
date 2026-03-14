@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LimonikOne.Modules.Product.Api.Controllers;
 
 [ApiController]
-[Route("api/product-certifications")]
+[Route("api/product/certifications")]
 public sealed class CertificationsController : ControllerBase
 {
     [HttpGet]
