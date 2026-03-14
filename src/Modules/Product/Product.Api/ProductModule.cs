@@ -1,4 +1,7 @@
+using LimonikOne.Modules.Product.Application.Certifications.GetAll;
+using LimonikOne.Modules.Product.Application.Handlings.GetAll;
 using LimonikOne.Modules.Product.Application.Stages.GetAll;
+using LimonikOne.Modules.Product.Application.Varieties.GetAll;
 using LimonikOne.Modules.Product.Infrastructure.Database;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
@@ -44,6 +47,18 @@ public sealed class ProductModule : IModule
         services.AddScoped<
             IQueryHandler<GetAllStagesQuery, IReadOnlyList<StageDto>>,
             GetAllStagesHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetAllCertificationsQuery, IReadOnlyList<CertificationDto>>,
+            GetAllCertificationsHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetAllHandlingsQuery, IReadOnlyList<HandlingDto>>,
+            GetAllHandlingsHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetAllVarietiesQuery, IReadOnlyList<VarietyDto>>,
+            GetAllVarietiesHandler
         >();
     }
 
