@@ -1,8 +1,13 @@
+using FluentValidation;
+using LimonikOne.Modules.Product.Application;
 using LimonikOne.Modules.Product.Application.Certifications.GetAll;
 using LimonikOne.Modules.Product.Application.Handlings.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Create;
 using LimonikOne.Modules.Product.Application.Stages.GetAll;
 using LimonikOne.Modules.Product.Application.Varieties.GetAll;
+using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Modules.Product.Infrastructure.Database;
+using LimonikOne.Modules.Product.Infrastructure.Repositories.Products;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
 using LimonikOne.Shared.Infrastructure.Database;
@@ -44,6 +49,15 @@ public sealed class ProductModule : IModule
                 tags: new[] { "db", "ready" }
             );
 
+        // Unit of Work
+        services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
+
+        // Products
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICommandHandler<CreateProductCommand, Guid>, CreateProductHandler>();
+        services.AddScoped<IValidator<CreateProductCommand>, CreateProductValidator>();
+
+        // Queries
         services.AddScoped<
             IQueryHandler<GetAllStagesQuery, IReadOnlyList<StageDto>>,
             GetAllStagesHandler

@@ -37,14 +37,30 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<ProductAgg
             .HasColumnName("search_name")
             .HasMaxLength(500)
             .IsRequired();
-        builder.Property(p => p.Variety).HasColumnName("variety").HasMaxLength(150).IsRequired();
-        builder.Property(p => p.Handling).HasColumnName("handling").HasMaxLength(150).IsRequired();
+        builder
+            .Property(p => p.Variety)
+            .HasColumnName("variety")
+            .HasMaxLength(150)
+            .IsRequired()
+            .HasConversion(v => v.Name, name => Variety.FromName(name));
+        builder
+            .Property(p => p.Handling)
+            .HasColumnName("handling")
+            .HasMaxLength(150)
+            .IsRequired()
+            .HasConversion(h => h.Name, name => Handling.FromName(name));
         builder
             .Property(p => p.Certification)
             .HasColumnName("certification")
             .HasMaxLength(150)
-            .IsRequired();
-        builder.Property(p => p.Stage).HasColumnName("stage").HasMaxLength(100).IsRequired();
+            .IsRequired()
+            .HasConversion(c => c.Name, name => Certification.FromName(name));
+        builder
+            .Property(p => p.Stage)
+            .HasColumnName("stage")
+            .HasMaxLength(100)
+            .IsRequired()
+            .HasConversion(s => s.Name, name => Stage.FromName(name));
 
         builder.HasIndex(p => p.ItemNumber);
         builder.HasIndex(p => p.SearchName);
