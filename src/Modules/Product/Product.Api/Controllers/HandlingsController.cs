@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LimonikOne.Modules.Product.Api.Controllers;
 
 [ApiController]
+[Tags("Product")]
 [Route("api/product/handlings")]
 public sealed class HandlingsController : ControllerBase
 {
