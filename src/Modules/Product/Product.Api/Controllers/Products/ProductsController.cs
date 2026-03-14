@@ -1,6 +1,9 @@
 using FluentValidation;
 using LimonikOne.Modules.Product.Api.Controllers.Products.Requests;
+using LimonikOne.Modules.Product.Application.Products;
 using LimonikOne.Modules.Product.Application.Products.Create;
+using LimonikOne.Modules.Product.Application.Products.GetAll;
+using LimonikOne.Modules.Product.Application.Products.GetById;
 using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +15,41 @@ namespace LimonikOne.Modules.Product.Api.Controllers.Products;
 [Route("api/product/products")]
 public sealed class ProductsController : ControllerBase
 {
+    [HttpGet]
+    [ProducesResponseType(typeof(IReadOnlyList<ProductDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAll(
+        [FromServices] IQueryHandler<GetAllProductsQuery, IReadOnlyList<ProductDto>> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await handler.HandleAsync(new GetAllProductsQuery(), cancellationToken);
+
+        return Ok(result.Value);
+    }
+
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(ProductDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetById(
+        [FromRoute] Guid id,
+        [FromServices] IQueryHandler<GetProductByIdQuery, ProductDto> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await handler.HandleAsync(new GetProductByIdQuery(id), cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Problem(
+                detail: result.Error!.Message,
+                statusCode: StatusCodes.Status404NotFound,
+                title: result.Error.Code
+            );
+        }
+
+        return Ok(result.Value);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]

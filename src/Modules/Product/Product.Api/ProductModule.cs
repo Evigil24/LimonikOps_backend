@@ -2,7 +2,10 @@ using FluentValidation;
 using LimonikOne.Modules.Product.Application;
 using LimonikOne.Modules.Product.Application.Certifications.GetAll;
 using LimonikOne.Modules.Product.Application.Handlings.GetAll;
+using LimonikOne.Modules.Product.Application.Products;
 using LimonikOne.Modules.Product.Application.Products.Create;
+using LimonikOne.Modules.Product.Application.Products.GetAll;
+using LimonikOne.Modules.Product.Application.Products.GetById;
 using LimonikOne.Modules.Product.Application.Stages.GetAll;
 using LimonikOne.Modules.Product.Application.Varieties.GetAll;
 using LimonikOne.Modules.Product.Domain.Products;
@@ -56,6 +59,11 @@ public sealed class ProductModule : IModule
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<ICommandHandler<CreateProductCommand, Guid>, CreateProductHandler>();
         services.AddScoped<IValidator<CreateProductCommand>, CreateProductValidator>();
+        services.AddScoped<
+            IQueryHandler<GetAllProductsQuery, IReadOnlyList<ProductDto>>,
+            GetAllProductsHandler
+        >();
+        services.AddScoped<IQueryHandler<GetProductByIdQuery, ProductDto>, GetProductByIdHandler>();
 
         // Queries
         services.AddScoped<

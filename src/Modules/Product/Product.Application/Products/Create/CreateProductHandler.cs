@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Product.Application.Products;
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Shared.Abstractions.Application;
 

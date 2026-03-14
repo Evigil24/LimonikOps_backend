@@ -1,6 +1,6 @@
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Product.Application.Products.Create;
+namespace LimonikOne.Modules.Product.Application.Products;
 
 internal static class ProductErrors
 {
@@ -9,4 +9,7 @@ internal static class ProductErrors
             "Product.DuplicateItemNumber",
             $"A product with item number '{itemNumber}' already exists."
         );
+
+    public static Error NotFound(Guid id) =>
+        Error.NotFound("Product.NotFound", $"Product with id '{id}' was not found.");
 }

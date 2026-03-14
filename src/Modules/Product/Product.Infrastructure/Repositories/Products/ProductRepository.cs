@@ -14,6 +14,21 @@ internal sealed class ProductRepository : IProductRepository
         _dbContext = dbContext;
     }
 
+    public async Task<ProductAggregate?> GetByIdAsync(
+        ProductId id,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _dbContext.Products.FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+    }
+
+    public async Task<IReadOnlyList<ProductAggregate>> GetAllAsync(
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _dbContext.Products.ToListAsync(cancellationToken);
+    }
+
     public async Task<bool> ExistsByItemNumberAsync(
         string itemNumber,
         CancellationToken cancellationToken = default
