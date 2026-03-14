@@ -5,33 +5,101 @@ namespace LimonikOne.Tests.Architecture;
 
 public class CrossModuleBoundaryTests
 {
-    [Fact]
-    public void Reception_Domain_Should_Not_Reference_Other_Modules()
-    {
-        // When more modules are added, add their namespaces here
-        // For now, verify the pattern works with a self-referencing check
-        var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Reception.Domain.Weights.WeightBatchId).Assembly)
-            .ShouldNot()
-            .HaveDependencyOn("LimonikOne.Modules.Billing")
-            .GetResult();
-
-        result.IsSuccessful.Should().BeTrue("Reception.Domain should not reference other modules");
-    }
-
-    [Fact]
-    public void Reception_Application_Should_Not_Reference_Other_Modules()
+    [Theory]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Scale_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
             .InAssembly(
-                typeof(LimonikOne.Modules.Reception.Application.Weights.Ingest.IngestWeightBatchCommand).Assembly
+                typeof(LimonikOne.Modules.Scale.Domain.WeightBatches.WeightBatchId).Assembly
             )
             .ShouldNot()
-            .HaveDependencyOn("LimonikOne.Modules.Billing")
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue("Scale.Domain should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Scale_Application_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Scale.Application.WeightBatches.Ingest.IngestWeightBatchCommand).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
             .GetResult();
 
         result
             .IsSuccessful.Should()
-            .BeTrue("Reception.Application should not reference other modules");
+            .BeTrue("Scale.Application should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Print_Domain_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Print.Domain.PrintJobs.PrintJobId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue("Print.Domain should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Print_Application_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Print.Application.PrintJobs.Enqueue.EnqueuePrintJobCommand).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue("Print.Application should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Print")]
+    public void Product_Domain_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.ProductDomainAssembly).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue("Product.Domain should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Print")]
+    public void Product_Application_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Product.Application.ProductApplicationAssembly).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue("Product.Application should not reference {0}", otherModule);
     }
 }

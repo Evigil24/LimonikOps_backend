@@ -48,5 +48,19 @@
             Include="Testcontainers.PostgreSql"
             Version="$(TestcontainersPostgresVersion)"
         />
+        <PackageVersion
+            Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
+            Version="$(HealthChecksEfCoreVersion)"
+        />
+        <PackageVersion
+            Include="Microsoft.Extensions.Configuration.UserSecrets"
+            Version="$(UserSecretsVersion)"
+        />
+
+        <!-- HTTP Resilience -->
+        <PackageVersion
+            Include="Microsoft.Extensions.Http.Resilience"
+            Version="$(MicrosoftExtensionsHttpResilienceVersion)"
+        />
     </ItemGroup>
 </Project>

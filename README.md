@@ -8,19 +8,19 @@ A production-ready modular monolith backend built with .NET 10, Clean Architectu
 src/
   Host/                          → ASP.NET Core Web API (composition root)
   Modules/
-    Reception/                   → Example module (full vertical slice)
-      Reception.Api/             → Controllers, DTOs, module registration
-      Reception.Application/     → Commands, queries, handlers, validators
-      Reception.Domain/          → Entities, value objects, aggregates, domain events
-      Reception.Infrastructure/  → EF Core DbContext, repository implementations
+    Scale/                   → Example module (full vertical slice)
+      Scale.Api/             → Controllers, DTOs, module registration
+      Scale.Application/     → Commands, queries, handlers, validators
+      Scale.Domain/          → Entities, value objects, aggregates, domain events
+      Scale.Infrastructure/  → EF Core DbContext, repository implementations
   Shared/
     Shared.Abstractions/         → Shared contracts (ICommand, IQuery, Result, Entity, etc.)
     Shared.Infrastructure/       → Cross-cutting concerns (middleware, domain event dispatcher)
 tests/
   Architecture.Tests/            → Dependency direction and module boundary enforcement
   Modules/
-    Reception.UnitTests/         → Domain and application layer unit tests
-    Reception.IntegrationTests/  → API integration tests with Testcontainers
+    Scale.UnitTests/         → Domain and application layer unit tests
+    Scale.IntegrationTests/  → API integration tests with Testcontainers
 ```
 
 ### Dependency Rules
@@ -77,14 +77,14 @@ Each use case is a dedicated command or query type with a corresponding handler.
 
 ```csharp
 // 1. Define the command
-public sealed record CreateReceptionCommand(
+public sealed record CreateScaleCommand(
     string FirstName, string LastName, string? Notes) : ICommand<Guid>;
 
 // 2. Create a handler
-internal sealed class CreateReceptionHandler : ICommandHandler<CreateReceptionCommand, Guid>
+internal sealed class CreateScaleHandler : ICommandHandler<CreateScaleCommand, Guid>
 {
     public async Task<Result<Guid>> HandleAsync(
-        CreateReceptionCommand command, CancellationToken cancellationToken = default)
+        CreateScaleCommand command, CancellationToken cancellationToken = default)
     {
         // Business logic here
         return Result.Success(newId);
@@ -92,22 +92,22 @@ internal sealed class CreateReceptionHandler : ICommandHandler<CreateReceptionCo
 }
 
 // 3. Register in the module's IModule.Register()
-services.AddScoped<ICommandHandler<CreateReceptionCommand, Guid>, CreateReceptionHandler>();
+services.AddScoped<ICommandHandler<CreateScaleCommand, Guid>, CreateScaleHandler>();
 
 // 4. Inject in controller
 public async Task<IActionResult> Create(
-    [FromServices] ICommandHandler<CreateReceptionCommand, Guid> handler, ...)
+    [FromServices] ICommandHandler<CreateScaleCommand, Guid> handler, ...)
 ```
 
 ### Query Example
 
 ```csharp
-public sealed record GetReceptionByIdQuery(Guid Id) : IQuery<ReceptionDto>;
+public sealed record GetScaleByIdQuery(Guid Id) : IQuery<ScaleDto>;
 
-internal sealed class GetReceptionByIdHandler : IQueryHandler<GetReceptionByIdQuery, ReceptionDto>
+internal sealed class GetScaleByIdHandler : IQueryHandler<GetScaleByIdQuery, ScaleDto>
 {
-    public async Task<Result<ReceptionDto>> HandleAsync(
-        GetReceptionByIdQuery query, CancellationToken cancellationToken = default)
+    public async Task<Result<ScaleDto>> HandleAsync(
+        GetScaleByIdQuery query, CancellationToken cancellationToken = default)
     {
         // Fetch and return
     }
@@ -136,33 +136,33 @@ Domain events are in-process only. Aggregates raise events, which are dispatched
 
 ```csharp
 // 1. Define an event
-public sealed record ReceptionCreatedEvent(
-    ReceptionId ReceptionId, string GuestFullName) : DomainEvent;
+public sealed record ScaleCreatedEvent(
+    ScaleId ScaleId, string GuestFullName) : DomainEvent;
 
 // 2. Raise in aggregate
-public static ReceptionEntity Create(GuestName guestName, string? notes)
+public static ScaleEntity Create(GuestName guestName, string? notes)
 {
-    var reception = new ReceptionEntity { ... };
-    reception.RaiseDomainEvent(new ReceptionCreatedEvent(reception.Id, guestName.FullName));
-    return reception;
+    var scale = new ScaleEntity { ... };
+    scale.RaiseDomainEvent(new ScaleCreatedEvent(scale.Id, guestName.FullName));
+    return scale;
 }
 
 // 3. Create a handler in Application layer
-internal sealed class ReceptionCreatedEventHandler : IDomainEventHandler<ReceptionCreatedEvent>
+internal sealed class ScaleCreatedEventHandler : IDomainEventHandler<ScaleCreatedEvent>
 {
-    public Task HandleAsync(ReceptionCreatedEvent domainEvent, CancellationToken ct = default)
+    public Task HandleAsync(ScaleCreatedEvent domainEvent, CancellationToken ct = default)
     {
         // React to event
     }
 }
 
 // 4. Register the handler
-services.AddScoped<IDomainEventHandler<ReceptionCreatedEvent>, ReceptionCreatedEventHandler>();
+services.AddScoped<IDomainEventHandler<ScaleCreatedEvent>, ScaleCreatedEventHandler>();
 
 // 5. Dispatch after saving (in command handler)
-await _repository.AddAsync(reception, ct);
-await _domainEventDispatcher.DispatchAsync(reception.DomainEvents, ct);
-reception.ClearDomainEvents();
+await _repository.AddAsync(scale, ct);
+await _domainEventDispatcher.DispatchAsync(scale.DomainEvents, ct);
+scale.ClearDomainEvents();
 ```
 
 ## How to Add a New Module
@@ -198,7 +198,7 @@ reception.ClearDomainEvents();
    ```csharp
    var moduleAssemblies = new[]
    {
-       typeof(ReceptionModule).Assembly,
+       typeof(ScaleModule).Assembly,
        typeof(YourModule).Assembly
    };
    ```
@@ -214,13 +214,13 @@ reception.ClearDomainEvents();
 dotnet test LimonikOne.slnx
 
 # Run only unit tests
-dotnet test tests/Modules/Reception.UnitTests
+dotnet test tests/Modules/Scale.UnitTests
 
 # Run architecture tests
 dotnet test tests/Architecture.Tests
 
 # Run integration tests (requires Docker for Testcontainers)
-dotnet test tests/Modules/Reception.IntegrationTests
+dotnet test tests/Modules/Scale.IntegrationTests
 ```
 
 ## Technical Stack

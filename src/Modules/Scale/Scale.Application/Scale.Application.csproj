@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <RootNamespace>LimonikOne.Modules.Scale.Application</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="FluentValidation" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Scale.Domain\Scale.Domain.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <InternalsVisibleTo Include="Scale.Api" />
+        <InternalsVisibleTo Include="Scale.UnitTests" />
+    </ItemGroup>
+</Project>

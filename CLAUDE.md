@@ -19,8 +19,8 @@ API docs: http://localhost:5100/scalar/v1
 ```bash
 dotnet test LimonikOne.slnx                        # all tests
 dotnet test tests/Architecture.Tests                # architecture rules
-dotnet test tests/Modules/Reception.UnitTests       # unit tests
-dotnet test tests/Modules/Reception.IntegrationTests # integration (needs Docker)
+dotnet test tests/Modules/Scale.UnitTests       # unit tests
+dotnet test tests/Modules/Scale.IntegrationTests # integration (needs Docker)
 ```
 
 Integration tests use Testcontainers (PostgreSQL) — Docker must be running.
@@ -59,6 +59,14 @@ dotnet csharpier check .
 - **UUIDv7** for ID generation
 - **IModule** interface for module registration (DI + middleware)
 
+## Orchestration (Cross-Module Use Cases)
+
+- **Single-module use cases** stay inside their own module (controller → handler)
+- **Cross-module use cases** go in `src/Orchestration/UseCases/`
+- Orchestration references only `Shared.Abstractions` — never module internals
+- Each module exposes a **facade interface** (e.g., `IScaleModule`, `IPurchaseModule`) in `Shared.Abstractions` that the orchestrator consumes via DI
+- Host registers orchestration services and references the Orchestration project
+
 ## Code Conventions
 
 - `TreatWarningsAsErrors` is enabled — all warnings must be resolved
@@ -72,6 +80,8 @@ dotnet csharpier check .
 ```
 src/
   Host/                          → Composition root (Program.cs)
+  Orchestration/                 → Cross-module use case orchestrators
+    UseCases/                    → One folder per cross-module use case
   Modules/{Name}/
     {Name}.Domain/               → Entities, value objects, aggregates, domain events
     {Name}.Application/          → Commands, queries, handlers, validators
