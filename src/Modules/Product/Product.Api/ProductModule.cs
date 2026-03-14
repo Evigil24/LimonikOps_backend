@@ -1,4 +1,6 @@
+using LimonikOne.Modules.Product.Application.Stages.GetAll;
 using LimonikOne.Modules.Product.Infrastructure.Database;
+using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
 using LimonikOne.Shared.Infrastructure.Database;
 using Microsoft.AspNetCore.Builder;
@@ -38,6 +40,11 @@ public sealed class ProductModule : IModule
                 failureStatus: HealthStatus.Unhealthy,
                 tags: new[] { "db", "ready" }
             );
+
+        services.AddScoped<
+            IQueryHandler<GetAllStagesQuery, IReadOnlyList<StageDto>>,
+            GetAllStagesHandler
+        >();
     }
 
     public void Use(IApplicationBuilder app) { }
