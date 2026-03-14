@@ -7,10 +7,10 @@ public sealed class Product : AggregateRoot<ProductId>
     public string ItemNumber { get; private set; } = null!;
     public string PrimaryName { get; private set; } = null!;
     public string SearchName { get; private set; } = null!;
-    public string Variety { get; private set; } = null!;
-    public string Handling { get; private set; } = null!;
-    public string Certification { get; private set; } = null!;
-    public string Stage { get; private set; } = null!;
+    public Variety Variety { get; private set; } = null!;
+    public Handling Handling { get; private set; } = null!;
+    public Certification Certification { get; private set; } = null!;
+    public Stage Stage { get; private set; } = null!;
 
     private Product() { } // EF Core
 
@@ -18,10 +18,10 @@ public sealed class Product : AggregateRoot<ProductId>
         string itemNumber,
         string primaryName,
         string searchName,
-        string variety,
-        string handling,
-        string certification,
-        string stage
+        Variety variety,
+        Handling handling,
+        Certification certification,
+        Stage stage
     )
     {
         return new Product
