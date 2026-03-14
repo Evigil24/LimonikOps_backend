@@ -1,7 +1,7 @@
 using System.Net;
 using System.Net.Http.Json;
 using FluentAssertions;
-using LimonikOne.Modules.Scale.Api.Controllers.WeightBatches;
+using LimonikOne.Modules.Scale.Api.Controllers.WeightBatches.Requests;
 
 namespace LimonikOne.Modules.Scale.IntegrationTests;
 
@@ -28,7 +28,7 @@ public class ScaleApiTests : IClassFixture<ScaleApiFactory>
             }
         );
 
-        var response = await _client.PostAsJsonAsync("/api/weights", request);
+        var response = await _client.PostAsJsonAsync("/api/weight-batches", request);
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
     }
@@ -44,7 +44,7 @@ public class ScaleApiTests : IClassFixture<ScaleApiFactory>
             new List<IngestWeightReadingRequest>()
         );
 
-        var response = await _client.PostAsJsonAsync("/api/weights", request);
+        var response = await _client.PostAsJsonAsync("/api/weight-batches", request);
 
         response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
     }
@@ -64,10 +64,10 @@ public class ScaleApiTests : IClassFixture<ScaleApiFactory>
             }
         );
 
-        var firstResponse = await _client.PostAsJsonAsync("/api/weights", request);
+        var firstResponse = await _client.PostAsJsonAsync("/api/weight-batches", request);
         firstResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
-        var secondResponse = await _client.PostAsJsonAsync("/api/weights", request);
+        var secondResponse = await _client.PostAsJsonAsync("/api/weight-batches", request);
         secondResponse.StatusCode.Should().Be(HttpStatusCode.OK);
     }
 }

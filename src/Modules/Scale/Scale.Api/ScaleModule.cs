@@ -45,7 +45,7 @@ public sealed class ScaleModule : IModule
         services
             .AddHealthChecks()
             .AddDbContextCheck<ScaleDbContext>(
-                name: "postgres",
+                name: "scale-db",
                 failureStatus: HealthStatus.Unhealthy,
                 tags: new[] { "db", "ready" }
             );
