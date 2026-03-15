@@ -1,6 +1,5 @@
 using FluentAssertions;
-using LimonikOne.Modules.Product.Domain.Products;
-using ProductAggregate = LimonikOne.Modules.Product.Domain.Products.Product;
+using LimonikOne.Modules.Product.Domain.Items;
 
 namespace LimonikOne.Modules.Product.UnitTests;
 
@@ -17,7 +16,7 @@ public class ProductEntityTests
         var primaryName = "Lemon Bulk";
         var searchName = "lemon bulk conventional";
 
-        var product = ProductAggregate.Create(
+        var item = Item.Create(
             itemNumber,
             primaryName,
             searchName,
@@ -27,14 +26,14 @@ public class ProductEntityTests
             stage
         );
 
-        product.Should().NotBeNull();
-        product.Id.Value.Should().NotBeEmpty();
-        product.ItemNumber.Should().Be(itemNumber);
-        product.PrimaryName.Should().Be(primaryName);
-        product.SearchName.Should().Be(searchName);
-        product.Variety.Should().Be(variety);
-        product.Handling.Should().Be(handling);
-        product.Certification.Should().Be(certification);
-        product.Stage.Should().Be(stage);
+        item.Should().NotBeNull();
+        item.Id.Value.Should().NotBeEmpty();
+        item.ItemNumber.Should().Be(itemNumber);
+        item.PrimaryName.Should().Be(primaryName);
+        item.SearchName.Should().Be(searchName);
+        item.Variety.Should().Be(variety);
+        item.Handling.Should().Be(handling);
+        item.Certification.Should().Be(certification);
+        item.Stage.Should().Be(stage);
     }
 }

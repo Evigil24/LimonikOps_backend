@@ -1,5 +1,5 @@
 using FluentAssertions;
-using LimonikOne.Modules.Product.Domain.Products;
+using LimonikOne.Modules.Product.Domain.Items;
 
 namespace LimonikOne.Modules.Product.UnitTests;
 

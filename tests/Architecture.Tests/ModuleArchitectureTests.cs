@@ -193,7 +193,7 @@ public class ModuleArchitectureTests
     public void Product_Domain_Should_Not_Depend_On_Application()
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.Products.ProductId).Assembly)
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.Items.ItemId).Assembly)
             .ShouldNot()
             .HaveDependencyOn(ProductApplicationNamespace)
             .GetResult();
@@ -212,7 +212,7 @@ public class ModuleArchitectureTests
     public void Product_Domain_Should_Not_Depend_On_Infrastructure()
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.Products.ProductId).Assembly)
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.Items.ItemId).Assembly)
             .ShouldNot()
             .HaveDependencyOn(ProductInfrastructureNamespace)
             .GetResult();
@@ -232,7 +232,7 @@ public class ModuleArchitectureTests
     {
         var result = Types
             .InAssembly(
-                typeof(LimonikOne.Modules.Product.Application.Products.Create.CreateProductCommand).Assembly
+                typeof(LimonikOne.Modules.Product.Application.Items.Create.CreateItemCommand).Assembly
             )
             .ShouldNot()
             .HaveDependencyOn(ProductInfrastructureNamespace)

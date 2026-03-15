@@ -2,7 +2,7 @@ using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 using FluentAssertions;
-using LimonikOne.Modules.Product.Api.Controllers.Products.Requests;
+using LimonikOne.Modules.Product.Api.Controllers.Items.Requests;
 
 namespace LimonikOne.Modules.Product.IntegrationTests;
 
@@ -18,7 +18,7 @@ public class ProductApiTests : IClassFixture<ProductApiFactory>
     [Fact]
     public async Task Post_Products_With_Valid_Request_Returns_Created()
     {
-        var request = new CreateProductRequest(
+        var request = new CreateItemRequest(
             ItemNumber: $"ITEM-{Guid.NewGuid():N}"[..20],
             PrimaryName: "Lemon Bulk",
             SearchName: "lemon bulk",
@@ -28,10 +28,10 @@ public class ProductApiTests : IClassFixture<ProductApiFactory>
             StageId: 1
         );
 
-        var response = await _client.PostAsJsonAsync("/api/product/products", request);
+        var response = await _client.PostAsJsonAsync("/api/product/items", request);
 
         response.StatusCode.Should().Be(HttpStatusCode.Created);
-        var body = await response.Content.ReadFromJsonAsync<CreateProductResponse>();
+        var body = await response.Content.ReadFromJsonAsync<CreateItemResponse>();
         body.Should().NotBeNull();
         body!.Id.Should().NotBeEmpty();
     }
@@ -40,55 +40,47 @@ public class ProductApiTests : IClassFixture<ProductApiFactory>
     public async Task Post_Products_Duplicate_ItemNumber_Returns_Conflict()
     {
         var itemNumber = $"DUP-{Guid.NewGuid():N}"[..20];
-        var request = new CreateProductRequest(itemNumber, "Lemon Bulk", "lemon bulk", 1, 1, 1, 1);
+        var request = new CreateItemRequest(itemNumber, "Lemon Bulk", "lemon bulk", 1, 1, 1, 1);
 
-        var first = await _client.PostAsJsonAsync("/api/product/products", request);
+        var first = await _client.PostAsJsonAsync("/api/product/items", request);
         first.StatusCode.Should().Be(HttpStatusCode.Created);
 
-        var second = await _client.PostAsJsonAsync("/api/product/products", request);
+        var second = await _client.PostAsJsonAsync("/api/product/items", request);
         second.StatusCode.Should().Be(HttpStatusCode.Conflict);
     }
 
     [Fact]
     public async Task Get_Products_Returns_Ok_And_List()
     {
-        var response = await _client.GetAsync("/api/product/products");
+        var response = await _client.GetAsync("/api/product/items");
 
         response.StatusCode.Should().Be(HttpStatusCode.OK);
-        var products = await response.Content.ReadFromJsonAsync<ProductListDto[]>();
-        products.Should().NotBeNull();
-        products!.Should().BeAssignableTo<IReadOnlyList<object>>();
+        var items = await response.Content.ReadFromJsonAsync<ItemListDto[]>();
+        items.Should().NotBeNull();
+        items!.Should().BeAssignableTo<IReadOnlyList<object>>();
     }
 
     [Fact]
     public async Task Post_Then_Get_Products_Returns_Created_Product_In_List()
     {
         var itemNumber = $"GET-{Guid.NewGuid():N}"[..20];
-        var request = new CreateProductRequest(
-            itemNumber,
-            "Lemon Sorted",
-            "lemon sorted",
-            2,
-            2,
-            2,
-            2
-        );
+        var request = new CreateItemRequest(itemNumber, "Lemon Sorted", "lemon sorted", 2, 2, 2, 2);
 
-        var createResponse = await _client.PostAsJsonAsync("/api/product/products", request);
+        var createResponse = await _client.PostAsJsonAsync("/api/product/items", request);
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);
-        var created = await createResponse.Content.ReadFromJsonAsync<CreateProductResponse>();
+        var created = await createResponse.Content.ReadFromJsonAsync<CreateItemResponse>();
         created.Should().NotBeNull();
         created!.Id.Should().NotBeEmpty();
 
-        var listResponse = await _client.GetAsync("/api/product/products");
+        var listResponse = await _client.GetAsync("/api/product/items");
         listResponse.StatusCode.Should().Be(HttpStatusCode.OK);
-        var products = await listResponse.Content.ReadFromJsonAsync<ProductListDto[]>();
-        products.Should().Contain(p => p.ItemNumber == itemNumber && p.Id == created.Id);
+        var items = await listResponse.Content.ReadFromJsonAsync<ItemListDto[]>();
+        items.Should().Contain(p => p.ItemNumber == itemNumber && p.Id == created.Id);
     }
 
-    private sealed record CreateProductResponse([property: JsonPropertyName("id")] Guid Id);
+    private sealed record CreateItemResponse([property: JsonPropertyName("id")] Guid Id);
 
-    private sealed record ProductListDto(
+    private sealed record ItemListDto(
         Guid Id,
         long DisplayId,
         string ItemNumber,

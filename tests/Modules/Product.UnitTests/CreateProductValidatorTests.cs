@@ -1,12 +1,12 @@
 using FluentAssertions;
-using LimonikOne.Modules.Product.Application.Products.Create;
+using LimonikOne.Modules.Product.Application.Items.Create;
 using Xunit;
 
 namespace LimonikOne.Modules.Product.UnitTests;
 
-public class CreateProductValidatorTests
+public class CreateItemValidatorTests
 {
-    private static CreateProductCommand ValidCommand() =>
+    private static CreateItemCommand ValidCommand() =>
         new(
             ItemNumber: "ITEM-001",
             PrimaryName: "Lemon Bulk",
@@ -17,7 +17,7 @@ public class CreateProductValidatorTests
             StageId: 1
         );
 
-    private readonly CreateProductValidator _sut = new();
+    private readonly CreateItemValidator _sut = new();
 
     [Fact]
     public void Valid_Input_Passes_Validation()
@@ -32,9 +32,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { ItemNumber = "" };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.ItemNumber));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.ItemNumber));
     }
 
     [Fact]
@@ -43,9 +41,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { ItemNumber = new string('x', 101) };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.ItemNumber));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.ItemNumber));
     }
 
     [Fact]
@@ -56,7 +52,7 @@ public class CreateProductValidatorTests
         result.IsValid.Should().BeFalse();
         result
             .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.PrimaryName));
+            .Contain(e => e.PropertyName == nameof(CreateItemCommand.PrimaryName));
     }
 
     [Fact]
@@ -67,7 +63,7 @@ public class CreateProductValidatorTests
         result.IsValid.Should().BeFalse();
         result
             .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.PrimaryName));
+            .Contain(e => e.PropertyName == nameof(CreateItemCommand.PrimaryName));
     }
 
     [Fact]
@@ -76,9 +72,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { SearchName = "" };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.SearchName));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.SearchName));
     }
 
     [Fact]
@@ -87,9 +81,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { SearchName = new string('x', 501) };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.SearchName));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.SearchName));
     }
 
     [Fact]
@@ -98,9 +90,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { VarietyId = 999 };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.VarietyId));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.VarietyId));
     }
 
     [Fact]
@@ -109,9 +99,7 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { HandlingId = 999 };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result
-            .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.HandlingId));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.HandlingId));
     }
 
     [Fact]
@@ -122,7 +110,7 @@ public class CreateProductValidatorTests
         result.IsValid.Should().BeFalse();
         result
             .Errors.Should()
-            .Contain(e => e.PropertyName == nameof(CreateProductCommand.CertificationId));
+            .Contain(e => e.PropertyName == nameof(CreateItemCommand.CertificationId));
     }
 
     [Fact]
@@ -131,6 +119,6 @@ public class CreateProductValidatorTests
         var cmd = ValidCommand() with { StageId = 999 };
         var result = _sut.Validate(cmd);
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateProductCommand.StageId));
+        result.Errors.Should().Contain(e => e.PropertyName == nameof(CreateItemCommand.StageId));
     }
 }

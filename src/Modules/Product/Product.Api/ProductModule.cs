@@ -1,16 +1,16 @@
 using FluentValidation;
 using LimonikOne.Modules.Product.Application;
-using LimonikOne.Modules.Product.Application.Products;
-using LimonikOne.Modules.Product.Application.Products.Create;
-using LimonikOne.Modules.Product.Application.Products.GetAll;
-using LimonikOne.Modules.Product.Application.Products.GetById;
-using LimonikOne.Modules.Product.Application.Products.Lookups.Certifications.GetAll;
-using LimonikOne.Modules.Product.Application.Products.Lookups.Handlings.GetAll;
-using LimonikOne.Modules.Product.Application.Products.Lookups.Stages.GetAll;
-using LimonikOne.Modules.Product.Application.Products.Lookups.Varieties.GetAll;
-using LimonikOne.Modules.Product.Domain.Products;
+using LimonikOne.Modules.Product.Application.Items;
+using LimonikOne.Modules.Product.Application.Items.Create;
+using LimonikOne.Modules.Product.Application.Items.GetAll;
+using LimonikOne.Modules.Product.Application.Items.GetById;
+using LimonikOne.Modules.Product.Application.Items.Lookups.Certifications.GetAll;
+using LimonikOne.Modules.Product.Application.Items.Lookups.Handlings.GetAll;
+using LimonikOne.Modules.Product.Application.Items.Lookups.Stages.GetAll;
+using LimonikOne.Modules.Product.Application.Items.Lookups.Varieties.GetAll;
+using LimonikOne.Modules.Product.Domain.Items;
 using LimonikOne.Modules.Product.Infrastructure.Database;
-using LimonikOne.Modules.Product.Infrastructure.Repositories.Products;
+using LimonikOne.Modules.Product.Infrastructure.Repositories.Items;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
 using LimonikOne.Shared.Infrastructure.Database;
@@ -55,15 +55,15 @@ public sealed class ProductModule : IModule
         // Unit of Work
         services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
 
-        // Products
-        services.AddScoped<IProductRepository, ProductRepository>();
-        services.AddScoped<ICommandHandler<CreateProductCommand, Guid>, CreateProductHandler>();
-        services.AddScoped<IValidator<CreateProductCommand>, CreateProductValidator>();
+        // Items
+        services.AddScoped<IItemRepository, ItemRepository>();
+        services.AddScoped<ICommandHandler<CreateItemCommand, Guid>, CreateItemHandler>();
+        services.AddScoped<IValidator<CreateItemCommand>, CreateItemValidator>();
         services.AddScoped<
-            IQueryHandler<GetAllProductsQuery, IReadOnlyList<ProductDto>>,
-            GetAllProductsHandler
+            IQueryHandler<GetAllItemsQuery, IReadOnlyList<ItemDto>>,
+            GetAllItemsHandler
         >();
-        services.AddScoped<IQueryHandler<GetProductByIdQuery, ProductDto>, GetProductByIdHandler>();
+        services.AddScoped<IQueryHandler<GetItemByIdQuery, ItemDto>, GetItemByIdHandler>();
 
         // Queries (singleton: handlers return static domain lists, no scoped deps)
         services.AddSingleton<
