@@ -5,6 +5,8 @@ using LimonikOne.Modules.Scale.Application.VehicleScaleRecords;
 using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Create;
 using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.GetAll;
 using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.GetById;
+using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Lookups.Statuses.GetAll;
+using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Lookups.Types.GetAll;
 using LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 using LimonikOne.Modules.Scale.Domain.VehicleScaleRecords;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
@@ -85,6 +87,17 @@ public sealed class ScaleModule : IModule
         services.AddScoped<
             IValidator<CreateVehicleScaleRecordCommand>,
             CreateVehicleScaleRecordValidator
+        >();
+        services.AddSingleton<
+            IQueryHandler<
+                GetAllVehicleScaleRecordStatusesQuery,
+                IReadOnlyList<VehicleScaleRecordStatusDto>
+            >,
+            GetAllVehicleScaleRecordStatusesHandler
+        >();
+        services.AddSingleton<
+            IQueryHandler<GetAllVehicleScaleRecordTypesQuery, IReadOnlyList<VehicleScaleRecordTypeDto>>,
+            GetAllVehicleScaleRecordTypesHandler
         >();
 
         services.AddScoped<ApiKeyAuthFilter>();
