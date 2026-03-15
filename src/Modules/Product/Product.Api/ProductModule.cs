@@ -65,20 +65,20 @@ public sealed class ProductModule : IModule
         >();
         services.AddScoped<IQueryHandler<GetProductByIdQuery, ProductDto>, GetProductByIdHandler>();
 
-        // Queries
-        services.AddScoped<
+        // Queries (singleton: handlers return static domain lists, no scoped deps)
+        services.AddSingleton<
             IQueryHandler<GetAllStagesQuery, IReadOnlyList<StageDto>>,
             GetAllStagesHandler
         >();
-        services.AddScoped<
+        services.AddSingleton<
             IQueryHandler<GetAllCertificationsQuery, IReadOnlyList<CertificationDto>>,
             GetAllCertificationsHandler
         >();
-        services.AddScoped<
+        services.AddSingleton<
             IQueryHandler<GetAllHandlingsQuery, IReadOnlyList<HandlingDto>>,
             GetAllHandlingsHandler
         >();
-        services.AddScoped<
+        services.AddSingleton<
             IQueryHandler<GetAllVarietiesQuery, IReadOnlyList<VarietyDto>>,
             GetAllVarietiesHandler
         >();
