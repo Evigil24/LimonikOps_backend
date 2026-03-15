@@ -28,18 +28,6 @@ internal sealed class GetProductByIdHandler : IQueryHandler<GetProductByIdQuery,
             return Result.Failure<ProductDto>(ProductErrors.NotFound(query.Id));
         }
 
-        var dto = new ProductDto(
-            product.Id.Value,
-            product.DisplayId,
-            product.ItemNumber,
-            product.PrimaryName,
-            product.SearchName,
-            product.Variety.Label,
-            product.Handling.Label,
-            product.Certification.Label,
-            product.Stage.Label
-        );
-
-        return Result.Success(dto);
+        return Result.Success(ProductDto.FromEntity(product));
     }
 }

@@ -22,17 +22,7 @@ internal sealed class GetAllProductsHandler
         var products = await _productRepository.GetAllAsync(cancellationToken);
 
         var dtos = products
-            .Select(p => new ProductDto(
-                p.Id.Value,
-                p.DisplayId,
-                p.ItemNumber,
-                p.PrimaryName,
-                p.SearchName,
-                p.Variety.Label,
-                p.Handling.Label,
-                p.Certification.Label,
-                p.Stage.Label
-            ))
+            .Select(ProductDto.FromEntity)
             .ToList();
 
         return Result.Success<IReadOnlyList<ProductDto>>(dtos);
