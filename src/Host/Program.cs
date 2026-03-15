@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Person.Api;
 using LimonikOne.Modules.Print.Api;
 using LimonikOne.Modules.Product.Api;
 using LimonikOne.Modules.Scale.Api;
@@ -23,6 +24,7 @@ builder.Host.UseSerilog(
 // Add services
 builder
     .Services.AddControllers()
+    .AddApplicationPart(typeof(PersonModule).Assembly)
     .AddApplicationPart(typeof(ScaleModule).Assembly)
     .AddApplicationPart(typeof(PrintModule).Assembly)
     .AddApplicationPart(typeof(ProductModule).Assembly);
@@ -35,6 +37,7 @@ builder.Services.AddDynamics(builder.Configuration);
 // Discover and register modules
 var moduleAssemblies = new[]
 {
+    typeof(PersonModule).Assembly,
     typeof(ScaleModule).Assembly,
     typeof(PrintModule).Assembly,
     typeof(ProductModule).Assembly,

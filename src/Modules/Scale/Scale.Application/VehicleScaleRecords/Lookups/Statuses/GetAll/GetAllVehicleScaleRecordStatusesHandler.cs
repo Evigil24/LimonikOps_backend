@@ -4,7 +4,10 @@ using LimonikOne.Shared.Abstractions.Application;
 namespace LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Lookups.Statuses.GetAll;
 
 internal sealed class GetAllVehicleScaleRecordStatusesHandler
-    : IQueryHandler<GetAllVehicleScaleRecordStatusesQuery, IReadOnlyList<VehicleScaleRecordStatusDto>>
+    : IQueryHandler<
+        GetAllVehicleScaleRecordStatusesQuery,
+        IReadOnlyList<VehicleScaleRecordStatusDto>
+    >
 {
     public Task<Result<IReadOnlyList<VehicleScaleRecordStatusDto>>> HandleAsync(
         GetAllVehicleScaleRecordStatusesQuery query,
@@ -21,6 +24,8 @@ internal sealed class GetAllVehicleScaleRecordStatusesHandler
             ))
             .ToList();
 
-        return Task.FromResult(Result.Success<IReadOnlyList<VehicleScaleRecordStatusDto>>(statuses));
+        return Task.FromResult(
+            Result.Success<IReadOnlyList<VehicleScaleRecordStatusDto>>(statuses)
+        );
     }
 }

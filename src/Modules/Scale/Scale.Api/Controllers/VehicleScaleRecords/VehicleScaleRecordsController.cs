@@ -19,11 +19,17 @@ public sealed class VehicleScaleRecordsController : ControllerBase
     [ProducesResponseType(typeof(IReadOnlyList<VehicleScaleRecordDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll(
         [FromServices]
-            IQueryHandler<GetAllVehicleScaleRecordsQuery, IReadOnlyList<VehicleScaleRecordDto>> handler,
+            IQueryHandler<
+            GetAllVehicleScaleRecordsQuery,
+            IReadOnlyList<VehicleScaleRecordDto>
+        > handler,
         CancellationToken cancellationToken
     )
     {
-        var result = await handler.HandleAsync(new GetAllVehicleScaleRecordsQuery(), cancellationToken);
+        var result = await handler.HandleAsync(
+            new GetAllVehicleScaleRecordsQuery(),
+            cancellationToken
+        );
 
         return Ok(result.Value);
     }
@@ -37,7 +43,10 @@ public sealed class VehicleScaleRecordsController : ControllerBase
         CancellationToken cancellationToken
     )
     {
-        var result = await handler.HandleAsync(new GetVehicleScaleRecordByIdQuery(id), cancellationToken);
+        var result = await handler.HandleAsync(
+            new GetVehicleScaleRecordByIdQuery(id),
+            cancellationToken
+        );
         if (result.IsFailure)
         {
             return Problem(

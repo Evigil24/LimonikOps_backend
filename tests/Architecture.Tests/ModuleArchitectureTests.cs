@@ -268,4 +268,90 @@ public class ModuleArchitectureTests
                     : "none"
             );
     }
+
+    // --- Person module architecture tests ---
+
+    private const string PersonDomainNamespace = "LimonikOne.Modules.Person.Domain";
+    private const string PersonApplicationNamespace = "LimonikOne.Modules.Person.Application";
+    private const string PersonInfrastructureNamespace = "LimonikOne.Modules.Person.Infrastructure";
+
+    [Fact]
+    public void Person_Domain_Should_Not_Depend_On_Application()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Person.Domain.Vendors.VendorId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(PersonApplicationNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Person.Domain should not depend on Application. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Person_Domain_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Person.Domain.Vendors.VendorId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(PersonInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Person.Domain should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Person_Application_Should_Not_Depend_On_Infrastructure()
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Person.Application.Vendors.GetAll.GetAllVendorsQuery).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(PersonInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Person.Application should not depend on Infrastructure. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
+
+    [Fact]
+    public void Person_Api_Should_Not_Depend_On_Infrastructure_Directly()
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Person.Api.PersonModule).Assembly)
+            .That()
+            .ResideInNamespace("LimonikOne.Modules.Person.Api.Controllers")
+            .ShouldNot()
+            .HaveDependencyOn(PersonInfrastructureNamespace)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue(
+                "Person.Api controllers should not depend on Infrastructure directly. Failing types: {0}",
+                result.FailingTypeNames is not null
+                    ? string.Join(", ", result.FailingTypeNames)
+                    : "none"
+            );
+    }
 }

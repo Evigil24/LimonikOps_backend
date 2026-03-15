@@ -96,7 +96,10 @@ public sealed class ScaleModule : IModule
             GetAllVehicleScaleRecordStatusesHandler
         >();
         services.AddSingleton<
-            IQueryHandler<GetAllVehicleScaleRecordTypesQuery, IReadOnlyList<VehicleScaleRecordTypeDto>>,
+            IQueryHandler<
+                GetAllVehicleScaleRecordTypesQuery,
+                IReadOnlyList<VehicleScaleRecordTypeDto>
+            >,
             GetAllVehicleScaleRecordTypesHandler
         >();
 

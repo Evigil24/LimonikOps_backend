@@ -6,6 +6,7 @@ namespace LimonikOne.Tests.Architecture;
 public class CrossModuleBoundaryTests
 {
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Print")]
     [InlineData("LimonikOne.Modules.Product")]
     public void Scale_Domain_Should_Not_Reference_Other_Modules(string otherModule)
@@ -22,6 +23,7 @@ public class CrossModuleBoundaryTests
     }
 
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Print")]
     [InlineData("LimonikOne.Modules.Product")]
     public void Scale_Application_Should_Not_Reference_Other_Modules(string otherModule)
@@ -40,6 +42,7 @@ public class CrossModuleBoundaryTests
     }
 
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Scale")]
     [InlineData("LimonikOne.Modules.Product")]
     public void Print_Domain_Should_Not_Reference_Other_Modules(string otherModule)
@@ -54,6 +57,7 @@ public class CrossModuleBoundaryTests
     }
 
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Scale")]
     [InlineData("LimonikOne.Modules.Product")]
     public void Print_Application_Should_Not_Reference_Other_Modules(string otherModule)
@@ -72,6 +76,7 @@ public class CrossModuleBoundaryTests
     }
 
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Scale")]
     [InlineData("LimonikOne.Modules.Print")]
     public void Product_Domain_Should_Not_Reference_Other_Modules(string otherModule)
@@ -86,6 +91,7 @@ public class CrossModuleBoundaryTests
     }
 
     [Theory]
+    [InlineData("LimonikOne.Modules.Person")]
     [InlineData("LimonikOne.Modules.Scale")]
     [InlineData("LimonikOne.Modules.Print")]
     public void Product_Application_Should_Not_Reference_Other_Modules(string otherModule)
@@ -101,5 +107,39 @@ public class CrossModuleBoundaryTests
         result
             .IsSuccessful.Should()
             .BeTrue("Product.Application should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Person_Domain_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(typeof(LimonikOne.Modules.Person.Domain.Vendors.VendorId).Assembly)
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result.IsSuccessful.Should().BeTrue("Person.Domain should not reference {0}", otherModule);
+    }
+
+    [Theory]
+    [InlineData("LimonikOne.Modules.Scale")]
+    [InlineData("LimonikOne.Modules.Print")]
+    [InlineData("LimonikOne.Modules.Product")]
+    public void Person_Application_Should_Not_Reference_Other_Modules(string otherModule)
+    {
+        var result = Types
+            .InAssembly(
+                typeof(LimonikOne.Modules.Person.Application.Vendors.GetAll.GetAllVendorsQuery).Assembly
+            )
+            .ShouldNot()
+            .HaveDependencyOn(otherModule)
+            .GetResult();
+
+        result
+            .IsSuccessful.Should()
+            .BeTrue("Person.Application should not reference {0}", otherModule);
     }
 }

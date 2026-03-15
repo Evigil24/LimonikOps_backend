@@ -21,6 +21,12 @@
         <Project Path="src/Modules/Product/Product.Domain/Product.Domain.csproj" />
         <Project Path="src/Modules/Product/Product.Infrastructure/Product.Infrastructure.csproj" />
     </Folder>
+    <Folder Name="/src/Modules/Person/">
+        <Project Path="src/Modules/Person/Person.Api/Person.Api.csproj" />
+        <Project Path="src/Modules/Person/Person.Application/Person.Application.csproj" />
+        <Project Path="src/Modules/Person/Person.Domain/Person.Domain.csproj" />
+        <Project Path="src/Modules/Person/Person.Infrastructure/Person.Infrastructure.csproj" />
+    </Folder>
     <Folder Name="/src/Modules/Scale/">
         <Project Path="src/Modules/Scale/Scale.Api/Scale.Api.csproj" />
         <Project Path="src/Modules/Scale/Scale.Application/Scale.Application.csproj" />

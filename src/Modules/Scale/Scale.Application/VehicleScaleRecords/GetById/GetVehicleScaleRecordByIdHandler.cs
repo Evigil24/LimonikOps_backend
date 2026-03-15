@@ -26,7 +26,9 @@ internal sealed class GetVehicleScaleRecordByIdHandler
 
         if (record is null)
         {
-            return Result.Failure<VehicleScaleRecordDto>(VehicleScaleRecordErrors.NotFound(query.Id));
+            return Result.Failure<VehicleScaleRecordDto>(
+                VehicleScaleRecordErrors.NotFound(query.Id)
+            );
         }
 
         return Result.Success(VehicleScaleRecordDto.FromEntity(record));

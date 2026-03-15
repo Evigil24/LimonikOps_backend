@@ -11,13 +11,16 @@ namespace LimonikOne.Modules.Scale.Api.Controllers.VehicleScaleRecords;
 public sealed class VehicleScaleRecordStatusesController : ControllerBase
 {
     [HttpGet]
-    [ProducesResponseType(typeof(IReadOnlyList<VehicleScaleRecordStatusDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(
+        typeof(IReadOnlyList<VehicleScaleRecordStatusDto>),
+        StatusCodes.Status200OK
+    )]
     public async Task<IActionResult> GetAll(
         [FromServices]
             IQueryHandler<
-                GetAllVehicleScaleRecordStatusesQuery,
-                IReadOnlyList<VehicleScaleRecordStatusDto>
-            > handler,
+            GetAllVehicleScaleRecordStatusesQuery,
+            IReadOnlyList<VehicleScaleRecordStatusDto>
+        > handler,
         CancellationToken cancellationToken
     )
     {

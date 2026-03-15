@@ -23,6 +23,10 @@
         <ProjectReference Include="..\..\src\Modules\Product\Product.Application\Product.Application.csproj" />
         <ProjectReference Include="..\..\src\Modules\Product\Product.Infrastructure\Product.Infrastructure.csproj" />
         <ProjectReference Include="..\..\src\Modules\Product\Product.Api\Product.Api.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Person\Person.Domain\Person.Domain.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Person\Person.Application\Person.Application.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Person\Person.Infrastructure\Person.Infrastructure.csproj" />
+        <ProjectReference Include="..\..\src\Modules\Person\Person.Api\Person.Api.csproj" />
         <ProjectReference Include="..\..\src\Modules\Scale\Scale.Domain\Scale.Domain.csproj" />
         <ProjectReference Include="..\..\src\Modules\Scale\Scale.Application\Scale.Application.csproj" />
         <ProjectReference Include="..\..\src\Modules\Scale\Scale.Infrastructure\Scale.Infrastructure.csproj" />
