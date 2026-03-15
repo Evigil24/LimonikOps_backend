@@ -3,6 +3,7 @@ using System;
 using LimonikOne.Modules.Scale.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LimonikOne.Modules.Scale.Infrastructure.Database.Migrations
 {
     [DbContext(typeof(ScaleDbContext))]
-    partial class ScaleDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260315231824_AddDisplayIdToVehicleScaleRecord")]
+    partial class AddDisplayIdToVehicleScaleRecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

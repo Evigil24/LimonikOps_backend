@@ -21,6 +21,12 @@ internal sealed class VehicleScaleRecordConfiguration
             .ValueGeneratedNever();
 
         builder
+            .Property(record => record.DisplayId)
+            .HasColumnName("display_id")
+            .UseIdentityAlwaysColumn();
+        builder.HasIndex(record => record.DisplayId).IsUnique();
+
+        builder
             .Property(record => record.Type)
             .HasColumnName("type_id")
             .HasConversion(type => type.Id, value => VehicleScaleRecordType.FromId(value))

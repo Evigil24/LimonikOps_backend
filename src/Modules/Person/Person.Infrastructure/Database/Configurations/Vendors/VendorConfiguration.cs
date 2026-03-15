@@ -19,6 +19,12 @@ internal sealed class VendorConfiguration : IEntityTypeConfiguration<VendorEntit
             .ValueGeneratedNever();
 
         builder
+            .Property(vendor => vendor.DisplayId)
+            .HasColumnName("display_id")
+            .UseIdentityAlwaysColumn();
+        builder.HasIndex(vendor => vendor.DisplayId).IsUnique();
+
+        builder
             .Property(vendor => vendor.AccountNumber)
             .HasColumnName("account_number")
             .HasMaxLength(100)
