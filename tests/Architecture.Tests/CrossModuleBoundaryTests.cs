@@ -77,7 +77,7 @@ public class CrossModuleBoundaryTests
     public void Product_Domain_Should_Not_Reference_Other_Modules(string otherModule)
     {
         var result = Types
-            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.ProductDomainAssembly).Assembly)
+            .InAssembly(typeof(LimonikOne.Modules.Product.Domain.Products.ProductId).Assembly)
             .ShouldNot()
             .HaveDependencyOn(otherModule)
             .GetResult();
@@ -92,7 +92,7 @@ public class CrossModuleBoundaryTests
     {
         var result = Types
             .InAssembly(
-                typeof(LimonikOne.Modules.Product.Application.ProductApplicationAssembly).Assembly
+                typeof(LimonikOne.Modules.Product.Application.Products.Create.CreateProductCommand).Assembly
             )
             .ShouldNot()
             .HaveDependencyOn(otherModule)
