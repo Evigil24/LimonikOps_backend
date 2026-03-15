@@ -1,4 +1,4 @@
-namespace LimonikOne.Modules.Product.Application.Certifications.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Certifications.GetAll;
 
 public sealed record CertificationDto(
     int Id,

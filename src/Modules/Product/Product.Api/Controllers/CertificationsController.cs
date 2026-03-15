@@ -1,4 +1,4 @@
-using LimonikOne.Modules.Product.Application.Certifications.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Certifications.GetAll;
 using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

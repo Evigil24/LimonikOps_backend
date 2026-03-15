@@ -1,7 +1,7 @@
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Product.Application.Certifications.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Certifications.GetAll;
 
 internal sealed class GetAllCertificationsHandler
     : IQueryHandler<GetAllCertificationsQuery, IReadOnlyList<CertificationDto>>

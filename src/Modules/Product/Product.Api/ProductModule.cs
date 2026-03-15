@@ -1,13 +1,13 @@
 using FluentValidation;
 using LimonikOne.Modules.Product.Application;
-using LimonikOne.Modules.Product.Application.Certifications.GetAll;
-using LimonikOne.Modules.Product.Application.Handlings.GetAll;
 using LimonikOne.Modules.Product.Application.Products;
 using LimonikOne.Modules.Product.Application.Products.Create;
 using LimonikOne.Modules.Product.Application.Products.GetAll;
 using LimonikOne.Modules.Product.Application.Products.GetById;
-using LimonikOne.Modules.Product.Application.Stages.GetAll;
-using LimonikOne.Modules.Product.Application.Varieties.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Certifications.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Handlings.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Stages.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Varieties.GetAll;
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Modules.Product.Infrastructure.Database;
 using LimonikOne.Modules.Product.Infrastructure.Repositories.Products;

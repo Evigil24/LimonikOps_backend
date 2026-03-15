@@ -1,7 +1,7 @@
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Product.Application.Handlings.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Handlings.GetAll;
 
 internal sealed class GetAllHandlingsHandler
     : IQueryHandler<GetAllHandlingsQuery, IReadOnlyList<HandlingDto>>

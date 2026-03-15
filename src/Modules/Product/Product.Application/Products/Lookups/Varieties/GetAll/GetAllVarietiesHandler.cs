@@ -1,7 +1,7 @@
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Product.Application.Varieties.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Varieties.GetAll;
 
 internal sealed class GetAllVarietiesHandler
     : IQueryHandler<GetAllVarietiesQuery, IReadOnlyList<VarietyDto>>

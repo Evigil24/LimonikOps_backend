@@ -1,7 +1,7 @@
 using LimonikOne.Modules.Product.Domain.Products;
 using LimonikOne.Shared.Abstractions.Application;
 
-namespace LimonikOne.Modules.Product.Application.Stages.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Stages.GetAll;
 
 internal sealed class GetAllStagesHandler
     : IQueryHandler<GetAllStagesQuery, IReadOnlyList<StageDto>>

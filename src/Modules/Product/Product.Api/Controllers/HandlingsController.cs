@@ -1,4 +1,4 @@
-using LimonikOne.Modules.Product.Application.Handlings.GetAll;
+using LimonikOne.Modules.Product.Application.Products.Lookups.Handlings.GetAll;
 using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -13,14 +13,16 @@ namespace LimonikOne.Modules.Product.Infrastructure.Database.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_products_item_number",
                 schema: "product",
-                table: "products");
+                table: "products"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_item_number",
                 schema: "product",
                 table: "products",
                 column: "item_number",
-                unique: true);
+                unique: true
+            );
         }
 
         /// <inheritdoc />
@@ -29,13 +31,15 @@ namespace LimonikOne.Modules.Product.Infrastructure.Database.Migrations
             migrationBuilder.DropIndex(
                 name: "IX_products_item_number",
                 schema: "product",
-                table: "products");
+                table: "products"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_products_item_number",
                 schema: "product",
                 table: "products",
-                column: "item_number");
+                column: "item_number"
+            );
         }
     }
 }

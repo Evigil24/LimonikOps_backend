@@ -1,4 +1,4 @@
-namespace LimonikOne.Modules.Product.Application.Stages.GetAll;
+namespace LimonikOne.Modules.Product.Application.Products.Lookups.Stages.GetAll;
 
 public sealed record StageDto(
     int Id,
