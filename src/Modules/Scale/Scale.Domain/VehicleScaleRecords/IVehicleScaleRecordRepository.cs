@@ -6,6 +6,9 @@ public interface IVehicleScaleRecordRepository
         VehicleScaleRecordId id,
         CancellationToken cancellationToken = default
     );
+    Task<IReadOnlyList<VehicleScaleRecordEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default
+    );
 
     Task AddAsync(VehicleScaleRecordEntity record, CancellationToken cancellationToken = default);
 

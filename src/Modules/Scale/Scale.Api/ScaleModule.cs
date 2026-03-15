@@ -1,7 +1,10 @@
 using FluentValidation;
 using LimonikOne.Modules.Scale.Api.Filters;
 using LimonikOne.Modules.Scale.Application;
+using LimonikOne.Modules.Scale.Application.VehicleScaleRecords;
 using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Create;
+using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.GetAll;
+using LimonikOne.Modules.Scale.Application.VehicleScaleRecords.GetById;
 using LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 using LimonikOne.Modules.Scale.Domain.VehicleScaleRecords;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
@@ -70,6 +73,14 @@ public sealed class ScaleModule : IModule
         services.AddScoped<
             ICommandHandler<CreateVehicleScaleRecordCommand, Guid>,
             CreateVehicleScaleRecordHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetAllVehicleScaleRecordsQuery, IReadOnlyList<VehicleScaleRecordDto>>,
+            GetAllVehicleScaleRecordsHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetVehicleScaleRecordByIdQuery, VehicleScaleRecordDto>,
+            GetVehicleScaleRecordByIdHandler
         >();
         services.AddScoped<
             IValidator<CreateVehicleScaleRecordCommand>,

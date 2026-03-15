@@ -40,4 +40,11 @@ internal sealed class VehicleScaleRecordRepository : IVehicleScaleRecordReposito
             cancellationToken
         );
     }
+
+    public async Task<IReadOnlyList<VehicleScaleRecordEntity>> GetAllAsync(
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _dbContext.VehicleScaleRecords.ToListAsync(cancellationToken);
+    }
 }
