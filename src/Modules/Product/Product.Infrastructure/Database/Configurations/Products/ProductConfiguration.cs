@@ -58,7 +58,7 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<ProductAgg
             .IsRequired()
             .HasConversion(s => s.Id, id => Stage.FromId(id));
 
-        builder.HasIndex(p => p.ItemNumber);
+        builder.HasIndex(p => p.ItemNumber).IsUnique();
         builder.HasIndex(p => p.SearchName);
     }
 }
