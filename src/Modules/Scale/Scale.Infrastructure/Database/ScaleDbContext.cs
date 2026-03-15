@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Scale.Domain.VehicleScaleRecords;
 using LimonikOne.Modules.Scale.Domain.WeightBatches;
 using LimonikOne.Modules.Scale.Domain.WeightEvents;
 using LimonikOne.Modules.Scale.Domain.WeightReadings;
@@ -10,6 +11,7 @@ internal sealed class ScaleDbContext : DbContext
     public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
     public DbSet<WeightReading> WeightReadings => Set<WeightReading>();
     public DbSet<WeightEventEntity> WeightEvents => Set<WeightEventEntity>();
+    public DbSet<VehicleScaleRecordEntity> VehicleScaleRecords => Set<VehicleScaleRecordEntity>();
 
     public ScaleDbContext(DbContextOptions<ScaleDbContext> options)
         : base(options) { }
