@@ -3,11 +3,11 @@ using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LimonikOne.Modules.Product.Api.Controllers;
+namespace LimonikOne.Modules.Product.Api.Controllers.Items;
 
 [ApiController]
-[Tags("Product")]
-[Route("api/product/certifications")]
+[Tags("Item")]
+[Route("api/Item/certifications")]
 public sealed class CertificationsController : ControllerBase
 {
     [HttpGet]

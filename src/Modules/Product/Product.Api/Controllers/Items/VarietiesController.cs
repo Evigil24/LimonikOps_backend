@@ -3,11 +3,11 @@ using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace LimonikOne.Modules.Product.Api.Controllers;
+namespace LimonikOne.Modules.Product.Api.Controllers.Items;
 
 [ApiController]
-[Tags("Product")]
-[Route("api/product/varieties")]
+[Tags("Item")]
+[Route("api/Item/varieties")]
 public sealed class VarietiesController : ControllerBase
 {
     [HttpGet]

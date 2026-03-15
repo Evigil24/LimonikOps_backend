@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace LimonikOne.Modules.Product.Api.Controllers.Items;
 
 [ApiController]
-[Tags("Product")]
-[Route("api/product/items")]
+[Tags("Item")]
+[Route("api/Item/Items")]
 public sealed class ItemsController : ControllerBase
 {
     [HttpGet]
