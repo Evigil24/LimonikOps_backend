@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Shared.Abstractions.Domain;
 
 namespace LimonikOne.Modules.Person.Domain.Vendors;
@@ -6,7 +7,8 @@ public sealed class VendorEntity : AggregateRoot<VendorId>
 {
     public string AccountNumber { get; private set; } = null!;
     public string GroupId { get; private set; } = null!;
-    public int ClassificationId { get; private set; }
+    public VendorClassificationId ClassificationId { get; private set; }
+    public VendorClassificationEntity? Classification { get; private set; }
     public string Name { get; private set; } = null!;
     public string SearchName { get; private set; } = null!;
     public string PartyNumber { get; private set; } = null!;
@@ -17,7 +19,7 @@ public sealed class VendorEntity : AggregateRoot<VendorId>
     public static VendorEntity Create(
         string accountNumber,
         string groupId,
-        int classificationId,
+        VendorClassificationId classificationId,
         string name,
         string searchName,
         string partyNumber,

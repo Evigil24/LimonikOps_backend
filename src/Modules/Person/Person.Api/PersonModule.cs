@@ -1,9 +1,14 @@
 using LimonikOne.Modules.Person.Application;
+using LimonikOne.Modules.Person.Application.VendorClassifications;
+using LimonikOne.Modules.Person.Application.VendorClassifications.GetAll;
+using LimonikOne.Modules.Person.Application.VendorClassifications.GetById;
 using LimonikOne.Modules.Person.Application.Vendors;
 using LimonikOne.Modules.Person.Application.Vendors.GetAll;
 using LimonikOne.Modules.Person.Application.Vendors.GetById;
+using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Modules.Person.Domain.Vendors;
 using LimonikOne.Modules.Person.Infrastructure.Database;
+using LimonikOne.Modules.Person.Infrastructure.Repositories.VendorClassifications;
 using LimonikOne.Modules.Person.Infrastructure.Repositories.Vendors;
 using LimonikOne.Shared.Abstractions.Application;
 using LimonikOne.Shared.Abstractions.Modules;
@@ -51,6 +56,7 @@ public sealed class PersonModule : IModule
 
         // Repositories
         services.AddScoped<IVendorRepository, VendorRepository>();
+        services.AddScoped<IVendorClassificationRepository, VendorClassificationRepository>();
 
         // Query Handlers
         services.AddScoped<
@@ -58,6 +64,14 @@ public sealed class PersonModule : IModule
             GetAllVendorsHandler
         >();
         services.AddScoped<IQueryHandler<GetVendorByIdQuery, VendorDto>, GetVendorByIdHandler>();
+        services.AddScoped<
+            IQueryHandler<GetAllVendorClassificationsQuery, IReadOnlyList<VendorClassificationDto>>,
+            GetAllVendorClassificationsHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetVendorClassificationByIdQuery, VendorClassificationDto>,
+            GetVendorClassificationByIdHandler
+        >();
     }
 
     public void Use(IApplicationBuilder app) { }

@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Modules.Person.Domain.Vendors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -39,7 +40,14 @@ internal sealed class VendorConfiguration : IEntityTypeConfiguration<VendorEntit
         builder
             .Property(vendor => vendor.ClassificationId)
             .HasColumnName("classification_id")
+            .HasConversion(id => id.Value, value => VendorClassificationId.From(value))
             .IsRequired();
+
+        builder
+            .HasOne(vendor => vendor.Classification)
+            .WithMany()
+            .HasForeignKey(vendor => vendor.ClassificationId)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder
             .Property(vendor => vendor.Name)

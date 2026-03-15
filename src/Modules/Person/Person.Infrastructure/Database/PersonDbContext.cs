@@ -1,3 +1,4 @@
+using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Modules.Person.Domain.Vendors;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,6 +7,8 @@ namespace LimonikOne.Modules.Person.Infrastructure.Database;
 internal sealed class PersonDbContext : DbContext
 {
     public DbSet<VendorEntity> Vendors => Set<VendorEntity>();
+    public DbSet<VendorClassificationEntity> VendorClassifications =>
+        Set<VendorClassificationEntity>();
 
     public PersonDbContext(DbContextOptions<PersonDbContext> options)
         : base(options) { }
