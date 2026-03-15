@@ -48,6 +48,7 @@
             Include="Testcontainers.PostgreSql"
             Version="$(TestcontainersPostgresVersion)"
         />
+        <PackageVersion Include="NSubstitute" Version="$(NSubstituteVersion)" />
         <PackageVersion
             Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore"
             Version="$(HealthChecksEfCoreVersion)"

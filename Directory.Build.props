@@ -26,5 +26,6 @@
         <HealthChecksEfCoreVersion>10.0.3</HealthChecksEfCoreVersion>
         <UserSecretsVersion>10.0.3</UserSecretsVersion>
         <MicrosoftExtensionsHttpResilienceVersion>10.0.0</MicrosoftExtensionsHttpResilienceVersion>
+        <NSubstituteVersion>5.3.0</NSubstituteVersion>
     </PropertyGroup>
 </Project>
