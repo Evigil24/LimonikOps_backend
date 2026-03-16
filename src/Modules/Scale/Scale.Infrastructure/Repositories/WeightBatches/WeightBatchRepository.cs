@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightBatches;
 
-internal sealed class WeightBatchRepository : IWeightBatchRepository
+internal sealed class WeightBatchRepository(ScaleDbContext dbContext) : IWeightBatchRepository
 {
-    private readonly ScaleDbContext _dbContext;
-
-    public WeightBatchRepository(ScaleDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ScaleDbContext _dbContext = dbContext;
 
     public async Task<bool> ExistsByExternalBatchIdAsync(
         Guid externalBatchId,

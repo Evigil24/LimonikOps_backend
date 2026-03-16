@@ -3,14 +3,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Print.Application.PrintJobs.Complete;
 
-internal sealed class CompletePrintJobHandler : ICommandHandler<CompletePrintJobCommand>
+internal sealed class CompletePrintJobHandler(IPrintJobRepository repository)
+    : ICommandHandler<CompletePrintJobCommand>
 {
-    private readonly IPrintJobRepository _repository;
-
-    public CompletePrintJobHandler(IPrintJobRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IPrintJobRepository _repository = repository;
 
     public async Task<Result> HandleAsync(
         CompletePrintJobCommand command,

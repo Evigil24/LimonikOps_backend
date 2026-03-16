@@ -4,14 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Person.Infrastructure.Database;
 
-internal sealed class PersonDbContext : DbContext
+internal sealed class PersonDbContext(DbContextOptions<PersonDbContext> options)
+    : DbContext(options)
 {
     public DbSet<VendorEntity> Vendors => Set<VendorEntity>();
     public DbSet<VendorClassificationEntity> VendorClassifications =>
         Set<VendorClassificationEntity>();
-
-    public PersonDbContext(DbContextOptions<PersonDbContext> options)
-        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

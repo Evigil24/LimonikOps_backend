@@ -5,27 +5,19 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Scale.Application.WeightBatches.Ingest;
 
-internal sealed class IngestWeightBatchHandler : ICommandHandler<IngestWeightBatchCommand>
+internal sealed class IngestWeightBatchHandler(
+    IWeightBatchRepository weightBatchRepository,
+    IWeightReadingRepository weightReadingRepository,
+    IWeightEventRepository weightEventRepository,
+    IScaleUnitOfWork unitOfWork
+) : ICommandHandler<IngestWeightBatchCommand>
 {
-    private readonly IWeightBatchRepository _weightBatchRepository;
-    private readonly IWeightReadingRepository _weightReadingRepository;
-    private readonly IWeightEventRepository _weightEventRepository;
-    private readonly IScaleUnitOfWork _unitOfWork;
+    private readonly IWeightBatchRepository _weightBatchRepository = weightBatchRepository;
+    private readonly IWeightReadingRepository _weightReadingRepository = weightReadingRepository;
+    private readonly IWeightEventRepository _weightEventRepository = weightEventRepository;
+    private readonly IScaleUnitOfWork _unitOfWork = unitOfWork;
 
     private const decimal WeightThreshold = 0m;
-
-    public IngestWeightBatchHandler(
-        IWeightBatchRepository weightBatchRepository,
-        IWeightReadingRepository weightReadingRepository,
-        IWeightEventRepository weightEventRepository,
-        IScaleUnitOfWork unitOfWork
-    )
-    {
-        _weightBatchRepository = weightBatchRepository;
-        _weightReadingRepository = weightReadingRepository;
-        _weightEventRepository = weightEventRepository;
-        _unitOfWork = unitOfWork;
-    }
 
     public async Task<Result> HandleAsync(
         IngestWeightBatchCommand command,

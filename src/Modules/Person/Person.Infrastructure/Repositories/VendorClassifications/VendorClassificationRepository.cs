@@ -4,14 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Person.Infrastructure.Repositories.VendorClassifications;
 
-internal sealed class VendorClassificationRepository : IVendorClassificationRepository
+internal sealed class VendorClassificationRepository(PersonDbContext dbContext)
+    : IVendorClassificationRepository
 {
-    private readonly PersonDbContext _dbContext;
-
-    public VendorClassificationRepository(PersonDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly PersonDbContext _dbContext = dbContext;
 
     public async Task<VendorClassificationEntity?> GetByIdAsync(
         VendorClassificationId id,

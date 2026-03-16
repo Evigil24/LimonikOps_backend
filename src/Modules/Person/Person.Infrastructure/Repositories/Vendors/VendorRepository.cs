@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Person.Infrastructure.Repositories.Vendors;
 
-internal sealed class VendorRepository : IVendorRepository
+internal sealed class VendorRepository(PersonDbContext dbContext) : IVendorRepository
 {
-    private readonly PersonDbContext _dbContext;
-
-    public VendorRepository(PersonDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly PersonDbContext _dbContext = dbContext;
 
     public async Task<VendorEntity?> GetByIdAsync(
         VendorId id,

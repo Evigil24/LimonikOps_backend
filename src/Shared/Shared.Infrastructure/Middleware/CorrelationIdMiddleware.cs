@@ -2,15 +2,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace LimonikOne.Shared.Infrastructure.Middleware;
 
-internal sealed class CorrelationIdMiddleware
+internal sealed class CorrelationIdMiddleware(RequestDelegate next)
 {
     private const string CorrelationIdHeader = "X-Correlation-ID";
-    private readonly RequestDelegate _next;
-
-    public CorrelationIdMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
 
     public async Task InvokeAsync(HttpContext context)
     {

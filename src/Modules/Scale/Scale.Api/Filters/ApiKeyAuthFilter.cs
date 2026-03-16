@@ -7,15 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace LimonikOne.Modules.Scale.Api.Filters;
 
-internal sealed class ApiKeyAuthFilter : IAsyncActionFilter
+internal sealed class ApiKeyAuthFilter(IConfiguration configuration) : IAsyncActionFilter
 {
     private const string ApiKeyHeaderName = "X-Api-Key";
-    private readonly IConfiguration _configuration;
-
-    public ApiKeyAuthFilter(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public async Task OnActionExecutionAsync(
         ActionExecutingContext context,

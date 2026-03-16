@@ -3,15 +3,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Print.Application.PrintJobs.Claim;
 
-internal sealed class ClaimPrintJobHandler
+internal sealed class ClaimPrintJobHandler(IPrintJobRepository repository)
     : ICommandHandler<ClaimPrintJobCommand, ClaimPrintJobResult?>
 {
-    private readonly IPrintJobRepository _repository;
-
-    public ClaimPrintJobHandler(IPrintJobRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IPrintJobRepository _repository = repository;
 
     public async Task<Result<ClaimPrintJobResult?>> HandleAsync(
         ClaimPrintJobCommand command,

@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Print.Infrastructure.Repositories;
 
-internal sealed class PrintJobRepository : IPrintJobRepository
+internal sealed class PrintJobRepository(PrintDbContext dbContext) : IPrintJobRepository
 {
-    private readonly PrintDbContext _dbContext;
-
-    public PrintJobRepository(PrintDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly PrintDbContext _dbContext = dbContext;
 
     public async Task<PrintJobEntity?> ClaimNextAsync(
         string agentId,

@@ -4,14 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.VehicleScaleRecords;
 
-internal sealed class VehicleScaleRecordRepository : IVehicleScaleRecordRepository
+internal sealed class VehicleScaleRecordRepository(ScaleDbContext dbContext)
+    : IVehicleScaleRecordRepository
 {
-    private readonly ScaleDbContext _dbContext;
-
-    public VehicleScaleRecordRepository(ScaleDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ScaleDbContext _dbContext = dbContext;
 
     public Task AddAsync(
         VehicleScaleRecordEntity record,

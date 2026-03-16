@@ -4,26 +4,19 @@ using LimonikOne.Shared.Abstractions.Dynamics;
 
 namespace LimonikOne.Modules.Person.Application.Vendors.Refresh;
 
-internal sealed class RefreshVendorsHandler : ICommandHandler<RefreshVendorsCommand>
+internal sealed class RefreshVendorsHandler(
+    IDynamicsHttpClient dynamicsClient,
+    IVendorRepository vendorRepository,
+    IPersonUnitOfWork unitOfWork
+) : ICommandHandler<RefreshVendorsCommand>
 {
     private const string EntitySet = "VendorsV3";
     private const string SelectFields =
         "VendorAccountNumber,VendorGroupId,VendorPartyNumber,VendorSearchName,RFCFederalTaxNumber,VendorOrganizationName";
 
-    private readonly IDynamicsHttpClient _dynamicsClient;
-    private readonly IVendorRepository _vendorRepository;
-    private readonly IPersonUnitOfWork _unitOfWork;
-
-    public RefreshVendorsHandler(
-        IDynamicsHttpClient dynamicsClient,
-        IVendorRepository vendorRepository,
-        IPersonUnitOfWork unitOfWork
-    )
-    {
-        _dynamicsClient = dynamicsClient;
-        _vendorRepository = vendorRepository;
-        _unitOfWork = unitOfWork;
-    }
+    private readonly IDynamicsHttpClient _dynamicsClient = dynamicsClient;
+    private readonly IVendorRepository _vendorRepository = vendorRepository;
+    private readonly IPersonUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Result> HandleAsync(
         RefreshVendorsCommand command,

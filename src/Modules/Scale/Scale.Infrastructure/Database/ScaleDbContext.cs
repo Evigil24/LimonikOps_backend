@@ -6,15 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Database;
 
-internal sealed class ScaleDbContext : DbContext
+internal sealed class ScaleDbContext(DbContextOptions<ScaleDbContext> options) : DbContext(options)
 {
     public DbSet<WeightBatchEntity> WeightBatches => Set<WeightBatchEntity>();
     public DbSet<WeightReading> WeightReadings => Set<WeightReading>();
     public DbSet<WeightEventEntity> WeightEvents => Set<WeightEventEntity>();
     public DbSet<VehicleScaleRecordEntity> VehicleScaleRecords => Set<VehicleScaleRecordEntity>();
-
-    public ScaleDbContext(DbContextOptions<ScaleDbContext> options)
-        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

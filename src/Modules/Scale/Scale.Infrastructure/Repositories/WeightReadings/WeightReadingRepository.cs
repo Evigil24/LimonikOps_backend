@@ -5,14 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightReadings;
 
-internal sealed class WeightReadingRepository : IWeightReadingRepository
+internal sealed class WeightReadingRepository(ScaleDbContext dbContext) : IWeightReadingRepository
 {
-    private readonly ScaleDbContext _dbContext;
-
-    public WeightReadingRepository(ScaleDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ScaleDbContext _dbContext = dbContext;
 
     public Task AddRangeAsync(
         IEnumerable<WeightReading> readings,

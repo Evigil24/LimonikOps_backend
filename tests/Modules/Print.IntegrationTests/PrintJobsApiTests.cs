@@ -5,19 +5,14 @@ using FluentAssertions;
 
 namespace LimonikOne.Modules.Print.IntegrationTests;
 
-public class PrintJobsApiTests : IClassFixture<PrintApiFactory>
+public class PrintJobsApiTests(PrintApiFactory factory) : IClassFixture<PrintApiFactory>
 {
-    private readonly HttpClient _client;
+    private readonly HttpClient _client = factory.CreateClient();
 
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
         PropertyNameCaseInsensitive = true,
     };
-
-    public PrintJobsApiTests(PrintApiFactory factory)
-    {
-        _client = factory.CreateClient();
-    }
 
     [Fact]
     public async Task Enqueue_WithValidRequest_Returns201()

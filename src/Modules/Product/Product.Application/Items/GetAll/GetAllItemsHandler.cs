@@ -4,14 +4,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Product.Application.Items.GetAll;
 
-internal sealed class GetAllItemsHandler : IQueryHandler<GetAllItemsQuery, IReadOnlyList<ItemDto>>
+internal sealed class GetAllItemsHandler(IItemRepository itemRepository)
+    : IQueryHandler<GetAllItemsQuery, IReadOnlyList<ItemDto>>
 {
-    private readonly IItemRepository _itemRepository;
-
-    public GetAllItemsHandler(IItemRepository itemRepository)
-    {
-        _itemRepository = itemRepository;
-    }
+    private readonly IItemRepository _itemRepository = itemRepository;
 
     public async Task<Result<IReadOnlyList<ItemDto>>> HandleAsync(
         GetAllItemsQuery query,

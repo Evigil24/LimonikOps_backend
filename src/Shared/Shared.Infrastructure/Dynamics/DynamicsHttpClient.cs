@@ -6,7 +6,11 @@ using Microsoft.Extensions.Options;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
 
-public sealed class DynamicsHttpClient : IDynamicsHttpClient
+public sealed class DynamicsHttpClient(
+    HttpClient httpClient,
+    ILogger<DynamicsHttpClient> logger,
+    IOptions<DynamicsOptions> options
+) : IDynamicsHttpClient
 {
     private static readonly JsonSerializerOptions JsonOptions = new()
     {
@@ -14,20 +18,9 @@ public sealed class DynamicsHttpClient : IDynamicsHttpClient
         PropertyNameCaseInsensitive = true,
     };
 
-    private readonly HttpClient _httpClient;
-    private readonly ILogger<DynamicsHttpClient> _logger;
-    private readonly DynamicsOptions _options;
-
-    public DynamicsHttpClient(
-        HttpClient httpClient,
-        ILogger<DynamicsHttpClient> logger,
-        IOptions<DynamicsOptions> options
-    )
-    {
-        _httpClient = httpClient;
-        _logger = logger;
-        _options = options.Value;
-    }
+    private readonly HttpClient _httpClient = httpClient;
+    private readonly ILogger<DynamicsHttpClient> _logger = logger;
+    private readonly DynamicsOptions _options = options.Value;
 
     public async Task<IReadOnlyList<T>> GetAsync<T>(
         string entitySet,

@@ -4,19 +4,13 @@ using Microsoft.Extensions.Options;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
 
-public sealed class DynamicsHealthCheck : IHealthCheck
+public sealed class DynamicsHealthCheck(
+    IDynamicsHttpClient dynamicsClient,
+    IOptions<DynamicsOptions> options
+) : IHealthCheck
 {
-    private readonly IDynamicsHttpClient _dynamicsClient;
-    private readonly DynamicsOptions _options;
-
-    public DynamicsHealthCheck(
-        IDynamicsHttpClient dynamicsClient,
-        IOptions<DynamicsOptions> options
-    )
-    {
-        _dynamicsClient = dynamicsClient;
-        _options = options.Value;
-    }
+    private readonly IDynamicsHttpClient _dynamicsClient = dynamicsClient;
+    private readonly DynamicsOptions _options = options.Value;
 
     public async Task<HealthCheckResult> CheckHealthAsync(
         HealthCheckContext context,

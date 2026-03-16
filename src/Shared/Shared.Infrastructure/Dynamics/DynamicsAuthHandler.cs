@@ -5,27 +5,20 @@ using Microsoft.Extensions.Options;
 
 namespace LimonikOne.Shared.Infrastructure.Dynamics;
 
-public sealed class DynamicsAuthHandler : DelegatingHandler
+public sealed class DynamicsAuthHandler(
+    IHttpClientFactory httpClientFactory,
+    ILogger<DynamicsAuthHandler> logger,
+    IOptions<DynamicsOptions> options
+) : DelegatingHandler
 {
     private const int RefreshBeforeExpirySeconds = 300; // 5 minutes
 
-    private readonly IHttpClientFactory _httpClientFactory;
-    private readonly ILogger<DynamicsAuthHandler> _logger;
-    private readonly DynamicsOptions _options;
+    private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
+    private readonly ILogger<DynamicsAuthHandler> _logger = logger;
+    private readonly DynamicsOptions _options = options.Value;
     private readonly SemaphoreSlim _semaphore = new(1, 1);
     private string? _cachedToken;
     private DateTimeOffset _tokenExpiresAt;
-
-    public DynamicsAuthHandler(
-        IHttpClientFactory httpClientFactory,
-        ILogger<DynamicsAuthHandler> logger,
-        IOptions<DynamicsOptions> options
-    )
-    {
-        _httpClientFactory = httpClientFactory;
-        _logger = logger;
-        _options = options.Value;
-    }
 
     protected override async Task<HttpResponseMessage> SendAsync(
         HttpRequestMessage request,

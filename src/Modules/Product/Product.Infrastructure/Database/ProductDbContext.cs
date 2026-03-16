@@ -3,12 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Product.Infrastructure.Database;
 
-internal sealed class ProductDbContext : DbContext
+internal sealed class ProductDbContext(DbContextOptions<ProductDbContext> options)
+    : DbContext(options)
 {
     public DbSet<Item> Items => Set<Item>();
-
-    public ProductDbContext(DbContextOptions<ProductDbContext> options)
-        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

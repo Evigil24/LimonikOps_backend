@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Scale.Infrastructure.Repositories.WeightEvents;
 
-internal sealed class WeightEventRepository : IWeightEventRepository
+internal sealed class WeightEventRepository(ScaleDbContext dbContext) : IWeightEventRepository
 {
-    private readonly ScaleDbContext _dbContext;
-
-    public WeightEventRepository(ScaleDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ScaleDbContext _dbContext = dbContext;
 
     public async Task<WeightEventEntity?> GetOpenEventByDeviceIdAsync(
         string deviceId,

@@ -3,14 +3,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace LimonikOne.Shared.Infrastructure.DomainEvents;
 
-internal sealed class InProcessDomainEventDispatcher : IDomainEventDispatcher
+internal sealed class InProcessDomainEventDispatcher(IServiceProvider serviceProvider)
+    : IDomainEventDispatcher
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public InProcessDomainEventDispatcher(IServiceProvider serviceProvider)
-    {
-        _serviceProvider = serviceProvider;
-    }
+    private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     public async Task DispatchAsync(
         IEnumerable<IDomainEvent> domainEvents,

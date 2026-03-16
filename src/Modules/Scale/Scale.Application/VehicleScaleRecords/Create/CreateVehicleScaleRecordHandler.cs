@@ -3,20 +3,13 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Scale.Application.VehicleScaleRecords.Create;
 
-internal sealed class CreateVehicleScaleRecordHandler
-    : ICommandHandler<CreateVehicleScaleRecordCommand, Guid>
+internal sealed class CreateVehicleScaleRecordHandler(
+    IVehicleScaleRecordRepository repository,
+    IScaleUnitOfWork unitOfWork
+) : ICommandHandler<CreateVehicleScaleRecordCommand, Guid>
 {
-    private readonly IVehicleScaleRecordRepository _repository;
-    private readonly IScaleUnitOfWork _unitOfWork;
-
-    public CreateVehicleScaleRecordHandler(
-        IVehicleScaleRecordRepository repository,
-        IScaleUnitOfWork unitOfWork
-    )
-    {
-        _repository = repository;
-        _unitOfWork = unitOfWork;
-    }
+    private readonly IVehicleScaleRecordRepository _repository = repository;
+    private readonly IScaleUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Result<Guid>> HandleAsync(
         CreateVehicleScaleRecordCommand command,

@@ -6,14 +6,9 @@ using LimonikOne.Modules.Product.Api.Controllers.Items.Requests;
 
 namespace LimonikOne.Modules.Product.IntegrationTests;
 
-public class ProductApiTests : IClassFixture<ProductApiFactory>
+public class ProductApiTests(ProductApiFactory factory) : IClassFixture<ProductApiFactory>
 {
-    private readonly HttpClient _client;
-
-    public ProductApiTests(ProductApiFactory factory)
-    {
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
 
     [Fact]
     public async Task Post_Products_With_Valid_Request_Returns_Created()

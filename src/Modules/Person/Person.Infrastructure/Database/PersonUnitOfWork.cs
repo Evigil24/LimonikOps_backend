@@ -2,14 +2,9 @@ using LimonikOne.Modules.Person.Application;
 
 namespace LimonikOne.Modules.Person.Infrastructure.Database;
 
-internal sealed class PersonUnitOfWork : IPersonUnitOfWork
+internal sealed class PersonUnitOfWork(PersonDbContext dbContext) : IPersonUnitOfWork
 {
-    private readonly PersonDbContext _dbContext;
-
-    public PersonUnitOfWork(PersonDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly PersonDbContext _dbContext = dbContext;
 
     public async Task SaveChangesAsync(CancellationToken cancellationToken = default)
     {

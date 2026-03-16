@@ -3,12 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Print.Infrastructure.Database;
 
-internal sealed class PrintDbContext : DbContext
+internal sealed class PrintDbContext(DbContextOptions<PrintDbContext> options) : DbContext(options)
 {
     public DbSet<PrintJobEntity> PrintJobs => Set<PrintJobEntity>();
-
-    public PrintDbContext(DbContextOptions<PrintDbContext> options)
-        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

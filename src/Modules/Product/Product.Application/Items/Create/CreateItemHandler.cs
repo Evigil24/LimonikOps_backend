@@ -4,16 +4,13 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Product.Application.Items.Create;
 
-internal sealed class CreateItemHandler : ICommandHandler<CreateItemCommand, Guid>
+internal sealed class CreateItemHandler(
+    IItemRepository itemRepository,
+    IProductUnitOfWork unitOfWork
+) : ICommandHandler<CreateItemCommand, Guid>
 {
-    private readonly IItemRepository _itemRepository;
-    private readonly IProductUnitOfWork _unitOfWork;
-
-    public CreateItemHandler(IItemRepository itemRepository, IProductUnitOfWork unitOfWork)
-    {
-        _itemRepository = itemRepository;
-        _unitOfWork = unitOfWork;
-    }
+    private readonly IItemRepository _itemRepository = itemRepository;
+    private readonly IProductUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Result<Guid>> HandleAsync(
         CreateItemCommand command,

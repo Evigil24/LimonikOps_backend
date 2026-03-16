@@ -3,14 +3,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Print.Application.PrintJobs.Enqueue;
 
-internal sealed class EnqueuePrintJobHandler : ICommandHandler<EnqueuePrintJobCommand, Guid>
+internal sealed class EnqueuePrintJobHandler(IPrintJobRepository repository)
+    : ICommandHandler<EnqueuePrintJobCommand, Guid>
 {
-    private readonly IPrintJobRepository _repository;
-
-    public EnqueuePrintJobHandler(IPrintJobRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IPrintJobRepository _repository = repository;
 
     public async Task<Result<Guid>> HandleAsync(
         EnqueuePrintJobCommand command,

@@ -4,15 +4,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Scale.Application.VehicleScaleRecords.GetById;
 
-internal sealed class GetVehicleScaleRecordByIdHandler
+internal sealed class GetVehicleScaleRecordByIdHandler(IVehicleScaleRecordRepository repository)
     : IQueryHandler<GetVehicleScaleRecordByIdQuery, VehicleScaleRecordDto>
 {
-    private readonly IVehicleScaleRecordRepository _repository;
-
-    public GetVehicleScaleRecordByIdHandler(IVehicleScaleRecordRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IVehicleScaleRecordRepository _repository = repository;
 
     public async Task<Result<VehicleScaleRecordDto>> HandleAsync(
         GetVehicleScaleRecordByIdQuery query,

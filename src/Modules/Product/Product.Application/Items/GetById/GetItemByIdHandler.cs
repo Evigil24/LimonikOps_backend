@@ -4,14 +4,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Product.Application.Items.GetById;
 
-internal sealed class GetItemByIdHandler : IQueryHandler<GetItemByIdQuery, ItemDto>
+internal sealed class GetItemByIdHandler(IItemRepository itemRepository)
+    : IQueryHandler<GetItemByIdQuery, ItemDto>
 {
-    private readonly IItemRepository _itemRepository;
-
-    public GetItemByIdHandler(IItemRepository itemRepository)
-    {
-        _itemRepository = itemRepository;
-    }
+    private readonly IItemRepository _itemRepository = itemRepository;
 
     public async Task<Result<ItemDto>> HandleAsync(
         GetItemByIdQuery query,

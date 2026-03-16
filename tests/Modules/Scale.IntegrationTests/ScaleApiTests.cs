@@ -5,14 +5,9 @@ using LimonikOne.Modules.Scale.Api.Controllers.WeightBatches.Requests;
 
 namespace LimonikOne.Modules.Scale.IntegrationTests;
 
-public class ScaleApiTests : IClassFixture<ScaleApiFactory>
+public class ScaleApiTests(ScaleApiFactory factory) : IClassFixture<ScaleApiFactory>
 {
-    private readonly HttpClient _client;
-
-    public ScaleApiTests(ScaleApiFactory factory)
-    {
-        _client = factory.CreateClient();
-    }
+    private readonly HttpClient _client = factory.CreateClient();
 
     [Fact]
     public async Task IngestWeightBatch_WithValidRequest_ReturnsOk()

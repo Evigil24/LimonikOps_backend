@@ -7,15 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace LimonikOne.Modules.Print.Api.Filters;
 
-internal sealed class PrintApiKeyAuthFilter : IAsyncActionFilter
+internal sealed class PrintApiKeyAuthFilter(IConfiguration configuration) : IAsyncActionFilter
 {
     private const string ApiKeyHeaderName = "X-Api-Key";
-    private readonly IConfiguration _configuration;
-
-    public PrintApiKeyAuthFilter(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public async Task OnActionExecutionAsync(
         ActionExecutingContext context,

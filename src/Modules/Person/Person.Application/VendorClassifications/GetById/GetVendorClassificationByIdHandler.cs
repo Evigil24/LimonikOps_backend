@@ -3,15 +3,10 @@ using LimonikOne.Shared.Abstractions.Application;
 
 namespace LimonikOne.Modules.Person.Application.VendorClassifications.GetById;
 
-internal sealed class GetVendorClassificationByIdHandler
+internal sealed class GetVendorClassificationByIdHandler(IVendorClassificationRepository repository)
     : IQueryHandler<GetVendorClassificationByIdQuery, VendorClassificationDto>
 {
-    private readonly IVendorClassificationRepository _repository;
-
-    public GetVendorClassificationByIdHandler(IVendorClassificationRepository repository)
-    {
-        _repository = repository;
-    }
+    private readonly IVendorClassificationRepository _repository = repository;
 
     public async Task<Result<VendorClassificationDto>> HandleAsync(
         GetVendorClassificationByIdQuery query,

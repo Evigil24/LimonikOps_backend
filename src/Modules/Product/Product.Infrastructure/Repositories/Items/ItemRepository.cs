@@ -4,14 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LimonikOne.Modules.Product.Infrastructure.Repositories.Items;
 
-internal sealed class ItemRepository : IItemRepository
+internal sealed class ItemRepository(ProductDbContext dbContext) : IItemRepository
 {
-    private readonly ProductDbContext _dbContext;
-
-    public ItemRepository(ProductDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly ProductDbContext _dbContext = dbContext;
 
     public async Task<Item?> GetByIdAsync(ItemId id, CancellationToken cancellationToken = default)
     {
