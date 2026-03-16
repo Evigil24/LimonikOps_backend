@@ -1,4 +1,7 @@
 using LimonikOne.Modules.Person.Application;
+using LimonikOne.Modules.Person.Application.Customers;
+using LimonikOne.Modules.Person.Application.Customers.GetAll;
+using LimonikOne.Modules.Person.Application.Customers.GetById;
 using LimonikOne.Modules.Person.Application.VendorClassifications;
 using LimonikOne.Modules.Person.Application.VendorClassifications.GetAll;
 using LimonikOne.Modules.Person.Application.VendorClassifications.GetById;
@@ -6,9 +9,11 @@ using LimonikOne.Modules.Person.Application.Vendors;
 using LimonikOne.Modules.Person.Application.Vendors.GetAll;
 using LimonikOne.Modules.Person.Application.Vendors.GetById;
 using LimonikOne.Modules.Person.Application.Vendors.Refresh;
+using LimonikOne.Modules.Person.Domain.Customers;
 using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Modules.Person.Domain.Vendors;
 using LimonikOne.Modules.Person.Infrastructure.Database;
+using LimonikOne.Modules.Person.Infrastructure.Repositories.Customers;
 using LimonikOne.Modules.Person.Infrastructure.Repositories.VendorClassifications;
 using LimonikOne.Modules.Person.Infrastructure.Repositories.Vendors;
 using LimonikOne.Shared.Abstractions.Application;
@@ -56,6 +61,7 @@ public sealed class PersonModule : IModule
         services.AddScoped<IPersonUnitOfWork, PersonUnitOfWork>();
 
         // Repositories
+        services.AddScoped<ICustomerRepository, CustomerRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();
         services.AddScoped<IVendorClassificationRepository, VendorClassificationRepository>();
 
@@ -63,6 +69,14 @@ public sealed class PersonModule : IModule
         services.AddScoped<ICommandHandler<RefreshVendorsCommand>, RefreshVendorsHandler>();
 
         // Query Handlers
+        services.AddScoped<
+            IQueryHandler<GetAllCustomersQuery, IReadOnlyList<CustomerDto>>,
+            GetAllCustomersHandler
+        >();
+        services.AddScoped<
+            IQueryHandler<GetCustomerByIdQuery, CustomerDto>,
+            GetCustomerByIdHandler
+        >();
         services.AddScoped<
             IQueryHandler<GetAllVendorsQuery, IReadOnlyList<VendorDto>>,
             GetAllVendorsHandler
