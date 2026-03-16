@@ -2,6 +2,7 @@ using LimonikOne.Modules.Person.Application;
 using LimonikOne.Modules.Person.Application.Customers;
 using LimonikOne.Modules.Person.Application.Customers.GetAll;
 using LimonikOne.Modules.Person.Application.Customers.GetById;
+using LimonikOne.Modules.Person.Application.Customers.Refresh;
 using LimonikOne.Modules.Person.Application.VendorClassifications;
 using LimonikOne.Modules.Person.Application.VendorClassifications.GetAll;
 using LimonikOne.Modules.Person.Application.VendorClassifications.GetById;
@@ -66,6 +67,7 @@ public sealed class PersonModule : IModule
         services.AddScoped<IVendorClassificationRepository, VendorClassificationRepository>();
 
         // Command Handlers
+        services.AddScoped<ICommandHandler<RefreshCustomersCommand>, RefreshCustomersHandler>();
         services.AddScoped<ICommandHandler<RefreshVendorsCommand>, RefreshVendorsHandler>();
 
         // Query Handlers

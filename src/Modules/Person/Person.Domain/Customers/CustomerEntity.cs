@@ -33,4 +33,40 @@ public sealed class CustomerEntity : AggregateRoot<CustomerId>
             RFCFederalTaxNumber = rfcFederalTaxNumber,
         };
     }
+
+    public static CustomerEntity CreateFromDynamics(
+        string accountNumber,
+        string groupId,
+        string name,
+        string searchName,
+        string partyNumber,
+        string rfcFederalTaxNumber
+    )
+    {
+        return new CustomerEntity
+        {
+            Id = CustomerId.New(),
+            AccountNumber = accountNumber,
+            GroupId = groupId,
+            Name = name,
+            SearchName = searchName,
+            PartyNumber = partyNumber,
+            RFCFederalTaxNumber = rfcFederalTaxNumber,
+        };
+    }
+
+    public void UpdateFromDynamics(
+        string groupId,
+        string name,
+        string searchName,
+        string partyNumber,
+        string rfcFederalTaxNumber
+    )
+    {
+        GroupId = groupId;
+        Name = name;
+        SearchName = searchName;
+        PartyNumber = partyNumber;
+        RFCFederalTaxNumber = rfcFederalTaxNumber;
+    }
 }
