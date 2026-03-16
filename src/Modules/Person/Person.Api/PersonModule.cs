@@ -5,6 +5,7 @@ using LimonikOne.Modules.Person.Application.VendorClassifications.GetById;
 using LimonikOne.Modules.Person.Application.Vendors;
 using LimonikOne.Modules.Person.Application.Vendors.GetAll;
 using LimonikOne.Modules.Person.Application.Vendors.GetById;
+using LimonikOne.Modules.Person.Application.Vendors.Refresh;
 using LimonikOne.Modules.Person.Domain.VendorClassifications;
 using LimonikOne.Modules.Person.Domain.Vendors;
 using LimonikOne.Modules.Person.Infrastructure.Database;
@@ -57,6 +58,9 @@ public sealed class PersonModule : IModule
         // Repositories
         services.AddScoped<IVendorRepository, VendorRepository>();
         services.AddScoped<IVendorClassificationRepository, VendorClassificationRepository>();
+
+        // Command Handlers
+        services.AddScoped<ICommandHandler<RefreshVendorsCommand>, RefreshVendorsHandler>();
 
         // Query Handlers
         services.AddScoped<

@@ -40,14 +40,18 @@ internal sealed class VendorConfiguration : IEntityTypeConfiguration<VendorEntit
         builder
             .Property(vendor => vendor.ClassificationId)
             .HasColumnName("classification_id")
-            .HasConversion(id => id.Value, value => VendorClassificationId.From(value))
-            .IsRequired();
+            .HasConversion(
+                id => id.HasValue ? id.Value.Value : (Guid?)null,
+                value => value.HasValue ? VendorClassificationId.From(value.Value) : null
+            )
+            .IsRequired(false);
 
         builder
             .HasOne(vendor => vendor.Classification)
             .WithMany()
             .HasForeignKey(vendor => vendor.ClassificationId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict)
+            .IsRequired(false);
 
         builder
             .Property(vendor => vendor.Name)

@@ -1,6 +1,7 @@
 using LimonikOne.Modules.Person.Application.Vendors;
 using LimonikOne.Modules.Person.Application.Vendors.GetAll;
 using LimonikOne.Modules.Person.Application.Vendors.GetById;
+using LimonikOne.Modules.Person.Application.Vendors.Refresh;
 using LimonikOne.Shared.Abstractions.Application;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,5 +46,26 @@ public sealed class VendorsController : ControllerBase
         }
 
         return Ok(result.Value);
+    }
+
+    [HttpPost("refresh")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> Refresh(
+        [FromServices] ICommandHandler<RefreshVendorsCommand> handler,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await handler.HandleAsync(new RefreshVendorsCommand(), cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return Problem(
+                detail: result.Error!.Message,
+                statusCode: StatusCodes.Status500InternalServerError,
+                title: result.Error.Code
+            );
+        }
+
+        return Ok();
     }
 }

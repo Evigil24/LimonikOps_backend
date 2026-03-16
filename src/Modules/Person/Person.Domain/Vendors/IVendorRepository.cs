@@ -8,5 +8,10 @@ public interface IVendorRepository
 
     Task AddAsync(VendorEntity vendor, CancellationToken cancellationToken = default);
 
+    Task AddRangeAsync(
+        IEnumerable<VendorEntity> vendors,
+        CancellationToken cancellationToken = default
+    );
+
     Task UpdateAsync(VendorEntity vendor, CancellationToken cancellationToken = default);
 }

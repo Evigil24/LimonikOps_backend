@@ -36,6 +36,14 @@ internal sealed class VendorRepository : IVendorRepository
         return _dbContext.Vendors.AddAsync(vendor, cancellationToken).AsTask();
     }
 
+    public async Task AddRangeAsync(
+        IEnumerable<VendorEntity> vendors,
+        CancellationToken cancellationToken = default
+    )
+    {
+        await _dbContext.Vendors.AddRangeAsync(vendors, cancellationToken);
+    }
+
     public Task UpdateAsync(VendorEntity vendor, CancellationToken cancellationToken = default)
     {
         _dbContext.Vendors.Update(vendor);
